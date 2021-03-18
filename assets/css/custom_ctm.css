@@ -1,0 +1,56 @@
+html body {
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+}
+
+.bg-navbar {
+  /* background: linear-gradient( 88deg , #13b4ca, #18cabe); */
+  background: linear-gradient(to right, #47aabd 0%, #049ab8 100%);
+}
+
+.layout-top-nav .wrapper .main-header .brand-image {
+  height: 45px;
+}
+
+.generate-btn {
+  position: absolute;
+  padding-top: 30px;
+}
+
+li.active {
+  font-weight: bold;
+  /* background-color: #51C1CD; */
+  background-color: #75C2D1;
+
+}
+
+
+ol {
+  counter-reset: item;
+  list-style-type: none;
+  line-height: 2.2;
+  margin-left: -40px;
+}
+
+ol li {
+  list-style-type: none;
+  counter-increment: item;
+}
+
+ol li span {
+  margin-left: 5px;
+}
+
+ol li:before {
+  content: counter(item);
+  margin-right: 5px;
+  background-color: #3FA3BA;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+  
+tfoot {
+  display: table-header-group;
+}
