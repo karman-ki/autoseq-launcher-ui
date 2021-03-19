@@ -4,7 +4,32 @@ $(document).ready(function(){
     $(selector).removeClass('active');
     $("#nav-li-analysis").addClass('active'); 
 
-    const server = 'localhost'
+
+    let server = "";
+    function loadConfigFile() {
+        $.ajax({
+            url: '../../config/server.json',
+            type: 'GET',
+            async:false,
+            success: function(response){
+                server = response.server;
+                console.log(server)	
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+
+    };
+    
+    const origin =  window.location.origin;
+    if(origin.indexOf('localhost') != -1){
+        server = 'localhost'
+    }else{
+        loadConfigFile();
+    }
+
+    // const server = 'localhost'
     const base_url = 'http://'+server+':8100/api/CTM/' ;
 
     getProjectList()

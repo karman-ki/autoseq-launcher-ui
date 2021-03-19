@@ -7,7 +7,33 @@ $(document).ready(function(){
     $("#barcode-details").hide()
     $("#barcode-list").html("")
 
-    const server = 'localhost'
+    
+    let server = "";
+    function loadConfigFile() {
+        $.ajax({
+            url: '../../config/server.json',
+            type: 'GET',
+            async:false,
+            success: function(response){
+                server = response.server;
+                console.log(server)	
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+
+    };
+    
+    const origin =  window.location.origin;
+    if(origin.indexOf('localhost') != -1){
+        server = 'localhost'
+    }else{
+        loadConfigFile();
+    }
+        
+
+    // const server = 'localhost'
     const base_url = 'http://'+server+':8100/api/CTM/' ;
 
     $(".form-submit").on('click', function(){
@@ -73,20 +99,9 @@ $(document).ready(function(){
             success: function(response){
                 console.log(response)
                 const data = response['data']
+                console.log(data.length)
                 if(data.length > 0){
-                    const barcoed_list = data[0]['file_list']
-                    const barcoed_id = data[0]['b_id']
-                    let barcode_li = '<ol>'
-                    $.each(barcoed_list, function(key,val){
-                        console.log(key,val)
-                        barcode_li += '<li><span>'+val+'</span></li>'
-                    })
-                    barcode_li +='</ol>'
-                    barcode_li +='<p> '+
-                                '<button type="button" class="btn bg-info btn-md btn-flat col-2 float-right generate-config" data-id="'+barcoed_id+'">Generate Config file</button>'+
-                                '</p>'
-                    $("#barcode-list").html(barcode_li)
-                    $("#barcode-details").show()
+                    window.location.href='../../analysis.php'
                 }
                
             },
