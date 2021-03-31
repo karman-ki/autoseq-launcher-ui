@@ -38,29 +38,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col">
             <div class="card card-primary card-outline">
               <div class="card-body">
-                <table id="example" class="table table-bordered table-hover">
+                <table id="tb_job_list" class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <th>Job Id</th>
-                    <th>Sample ID</th>
-                    <th>Status</th>                    
-                    <th>logs</th>
-                  </tr>
+                    <tr>
+                      <th>Job Id</th>
+                      <th>Project_id</th>
+                      <th>Cores / Machine Type</th>
+                      <th>Job status</th>  
+                      <th>Create Time</th>
+                      <th>Update Time</th>                 
+                      <th>Log Path</th>
+                    </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Job Id</th>
+                      <th>Project_id</th>
+                      <th>Cores / Machine Type</th>
+                      <th>Job status</th>  
+                      <th>Create Time</th>
+                      <th>Update Time</th>                  
+                      <th>Log Path</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>P-00420009</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>P-00420010</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  </tbody>
+                    </tbody>
                 </table>
               </div>
             </div>
@@ -86,23 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 <?php $path = getcwd()."/layout/"; include($path."footer_link.php"); ?>
 
-<script>
-  $(document).ready(function(){
+<script src="assets/js/jobs.js"></script>
 
-    const selector = '.nav li';
-	  $(selector).removeClass('active');
-	  $("#nav-li-job").addClass('active'); 
-
-    $('#example').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <a href="index.php" class="navbar-brand">
         <img src="assets/img/01.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-bold">Curation Task Manager</span>
+        <span class="brand-text font-weight-bold">Autoseq Launcher</span>
       </a>
 
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

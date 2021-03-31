@@ -2,9 +2,12 @@ $(document).ready(function(){
 
     const selector = '.nav li';
     $(selector).removeClass('active');
-    $("#nav-li-analysis").addClass('active'); 
+    $("#nav-li-job").addClass('active'); 
 
+    $("#barcode-details").hide()
+    $("#barcode-list").html("")
 
+    
     let server = "";
     function loadConfigFile() {
         $.ajax({
@@ -28,21 +31,22 @@ $(document).ready(function(){
     }else{
         loadConfigFile();
     }
+        
 
     // const server = 'localhost'
     const base_url = 'http://'+server+':8100/api/CTM/' ;
 
-    getProjectList()
+    getJobList()
 
-    $('#tb_project_list tfoot th').each( function () {
+    $('#tb_job_list tfoot th').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" class="input-sm" placeholder="'+title+'" />' );
      });
 
 
-    function getProjectList() {
+    function getJobList() {
         $.ajax({
-            url: base_url+'project_list',
+            url: base_url+'job_list',
             type: 'GET',
             dataType : 'json',
             success: function(response){
@@ -50,28 +54,30 @@ $(document).ready(function(){
                 let project_list_table = '';
         
                 $.each(jsonData,function(key, value){
-                    const project_status = value['pro_status']
-                    let button_info = ''
+                    const project_status = value['job_status']
+                    let status_info = ''
                     if(project_status == '0'){
-                        button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline" data-id="'+value['p_id']+'">Yet to Start</button>';
+                        status_info = '<span class="btn btn-info btn-sm">In-progess</span>';
                     }else if(project_status == '1'){
-                        button_info = '<button type="button" class="btn bg-primary btn-sm">In-progress</button>';
+                        status_info = '<span class="btn btn-warning btn-sm">Warning</span>';
                     }else if(project_status == '2'){
-                        button_info = '<span class="btn btn-danger btn-sm mr-1">Failed</span> <button type="button" class="btn bg-secondary btn-sm start-pipeline" data-id="'+value['p_id']+'">Re-Start</button>';
+                        status_info = '<span class="btn btn-danger btn-sm">Failed</span>';
                     }else if(project_status == '-1'){
-                        button_info = '<span class="btn btn-success btn-sm">Completed</span>';
+                        status_info = '<span class="btn btn-success btn-sm">Completed</span>';
                     }
 
                     project_list_table += '<tr>'+
-                                '  <td>'+value['sample_id']+'</td>'+
-                                '  <td>'+value['cfdna']+'</br>'+value['normal']+'</td>'+
-                                '  <td>'+value['config_path']+'</td>'+
+                                '  <td>'+value['job_id']+'</td>'+
+                                '  <td>'+value['project_id']+'</td>'+
+                                '  <td>'+value['cores']+'</br>'+value['machine_type']+'</td>'+
+                                '  <td>'+status_info+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
-                                '  <td>'+button_info+'</td>'+
+                                '  <td>'+value['update_time']+'</td>'+
+                                '  <td>'+value['log_path']+'</td>'+
                                 '</tr>';
                 })
-                $("#tb_project_list tbody").html(project_list_table);
-                $('#tb_project_list').DataTable({
+                $("#tb_job_list tbody").html(project_list_table);
+                $('#tb_job_list').DataTable({
                     "paging": true,
                     "lengthChange": true,
                     "searching": true,
@@ -81,7 +87,7 @@ $(document).ready(function(){
                     "responsive": true,
                     "order": [[0, "desc" ]],
                     "language": {
-                    "emptyTable": "No Project information available"
+                    "emptyTable": "No Job information available"
                     },
                     initComplete: function () {
                         // Apply the search
@@ -103,28 +109,6 @@ $(document).ready(function(){
                 console.log(error);
             }
         });   
-    }
-
-    $(document).on("click", ".start-pipeline", function(){
-        const p_id = $(this).attr('data-id');
-        start_pipeline(p_id)
-    })
-
-    function start_pipeline(p_id) {
-        const param = {'project_id': p_id}
-        $.ajax({
-            url: base_url+'start_pipline',
-            type: 'POST',
-            data: param,
-            dataType : 'json',
-            success: function(response){
-                $('#tb_project_list').DataTable().destroy();
-                getProjectList()
-            },
-            error: function(error){
-                console.log(error);
-            }
-        }); 
     }
 
 });
