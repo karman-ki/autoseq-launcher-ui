@@ -13,8 +13,8 @@ html body {
 }
 
 .generate-btn {
-  position: absolute;
-  padding-top: 30px;
+  position: relative;
+  padding-top: 42px;
 }
 
 li.active {
@@ -53,4 +53,39 @@ ol li:before {
   
 tfoot {
   display: table-header-group;
+}
+
+.form-group label {
+  text-transform: uppercase;
+  padding:5px;
+}
+
+.form-group label:after {
+  color: #e32;
+  content: ' *';
+  display:inline;
+}
+
+.wrapper-divider {
+  position: relative;
+  border: 1px dashed #ccc;
+}
+
+.divider {
+  height: 112px;
+  display: flex;
+  justify-content: center;
+}
+
+.or-separator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #d3d7da;
+}
+
+.vertical-line {
+  border-left: 1px solid #d3d7da;
+  flex-grow: 1;
+  width: 1px;
 }
