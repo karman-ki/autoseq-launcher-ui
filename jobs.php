@@ -47,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Job status</th>  
                       <th>Create Time</th>
                       <th>Update Time</th>                 
-                      <th>Log Path</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -58,7 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Job status</th>  
                       <th>Create Time</th>
                       <th>Update Time</th>                  
-                      <th>Log Path</th>
+                      <th>Action</th>
                     </tr>
                   </tfoot>
                   <tbody>

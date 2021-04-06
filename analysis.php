@@ -43,10 +43,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <table id="tb_project_list" class="table table-bordered table-hover" >
                         <thead>
                           <tr>
+                            <th>Project Name</th>
                             <th>Sample ID</th>
                             <th>Barcode Details</th>
-                            <th>Cores </th>
-                            <th>Machine Type</th>
+                            <th>Cores / Machine Type</th>
                             <th>Create Time</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -54,10 +54,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </thead>
                         <tfoot>
                           <tr>
+                            <th>Project Name</th>
                             <th>Sample ID</th>
                             <th>Barcode Details</th>
-                            <th>Cores </th>
-                            <th>Machine Type</th>                            
+                            <th>Cores / Machine Type</th>
                             <th>Create Time</th>
                             <th>Status</th>
                             <th>Action</th>

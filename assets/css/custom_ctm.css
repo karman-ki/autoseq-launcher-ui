@@ -89,3 +89,8 @@ tfoot {
   flex-grow: 1;
   width: 1px;
 }
+
+a.btn.disabled {
+  cursor:not-allowed;
+  opacity: 0.6;
+}

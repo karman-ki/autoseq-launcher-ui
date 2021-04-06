@@ -65,15 +65,15 @@ $(document).ready(function(){
                     }
 
                     project_list_table += '<tr>'+
+                                '  <td>'+value['project_name']+'</td>'+
                                 '  <td>'+value['sample_id']+'</td>'+
                                 '  <td>'+value['cfdna']+'</br>'+value['normal']+'</td>'+
-                                '  <td>'+value['cores']+'</td>'+
-                                '  <td>'+value['machine_type']+'</td>'+
+                                '  <td>'+value['cores']+' / '+value['machine_type']+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+button_info+'</td>'+
                                 '  <td>'+
-                                        '<button type="button" class="btn bg-default btn-sm btnEdit" '+edit_btn_enable+' data-id="'+value['p_id']+' "><i class="fas fa-edit fa-lg"></i></button>'+
-                                        '<button type="button" class="btn bg-default btn-sm btnView" data-id="'+value['p_id']+' "><i class="fas fa-info-circle fa-lg"></i></button>'+
+                                        // '<a class="btn btn-primary btn-sm btnView mr-1"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-folder pr-1"></i>View</a>'+
+                                        '<a class="btn btn-info btn-sm btnEdit '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a>'+
                                 '</td>'+
                                 '</tr>';
                 })
@@ -86,7 +86,7 @@ $(document).ready(function(){
                     "info": true,
                     "autoWidth": false,
                     "responsive": true,
-                    "order": [[0, "desc" ]],
+                    "order": [[4, "desc" ]],
                     "language": {
                     "emptyTable": "No Project information available"
                     },
@@ -122,6 +122,11 @@ $(document).ready(function(){
         editCoreMacineInfo(p_id)
     })
 
+    $(document).on("click", ".btnView", function(){
+        const p_id = $(this).attr('data-id');
+        viewCoreMacineInfo(p_id)
+    })
+
     $(document).on("click", ".update-analysis-info", function(){
         const p_id = $("#project_id").val();
         const cores = $("#cores").val();
@@ -138,8 +143,7 @@ $(document).ready(function(){
             dataType : 'json',
             success: function(response){
                 const data = response.data;
-                console.log(data)
-                if(response.status == true) {                
+                if(data.status == true) {                
                     $("#editAnalysis").modal('toggle');
                     $('#tb_project_list').DataTable().destroy();
                     getProjectList()
@@ -174,7 +178,25 @@ $(document).ready(function(){
                 console.log(error);
             }
         }); 
-    
+    }
+
+
+    function viewCoreMacineInfo(p_id) {
+        const param = {'project_id': p_id}
+        $.ajax({
+            url: base_url+'viewAnalysisInfo',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                const data = response.data;
+                console.log(data)
+
+            },
+            error: function(error){
+                console.log(error);
+            }
+        }); 
     }
 
     function start_pipeline(p_id) {

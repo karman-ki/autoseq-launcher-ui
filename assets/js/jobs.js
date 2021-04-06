@@ -68,12 +68,12 @@ $(document).ready(function(){
 
                     project_list_table += '<tr>'+
                                 '  <td>'+value['job_id']+'</td>'+
-                                '  <td>'+value['project_id']+'</td>'+
+                                '  <td>'+value['sample_id']+'</td>'+
                                 '  <td>'+value['cores']+'</br>'+value['machine_type']+'</td>'+
                                 '  <td>'+status_info+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+value['update_time']+'</td>'+
-                                '  <td>'+value['log_path']+'</td>'+
+                                '  <td><a class="btn btn-primary btn-sm btnLogView"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-folder pr-1"></i>Log</a></td>'+
                                 '</tr>';
                 })
                 $("#tb_job_list tbody").html(project_list_table);
@@ -109,6 +109,29 @@ $(document).ready(function(){
                 console.log(error);
             }
         });   
+    }
+
+    $(document).on("click", ".btnLogView", function(){
+        const job_id = $(this).attr('data-id');
+        getLoginfo(job_id)
+    })
+
+    function getLoginfo(job_id){
+        const param = {'job_id': job_id}
+        $.ajax({
+            url: base_url+'getPipelineLog',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                const data = response.data;
+                console.log(data)
+                
+            },
+            error: function(error){
+                console.log(error);
+            }
+        }); 
     }
 
 });
