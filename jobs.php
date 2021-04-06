@@ -72,13 +72,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+  <div class="modal" tabindex="-1" role="dialog" id="viewLogModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Log Information</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <p id="logContent"></p>
+          </div>  
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
   <?php $path = getcwd()."/layout/"; include($path."footer.php"); ?>

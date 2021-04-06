@@ -125,7 +125,11 @@ $(document).ready(function(){
             dataType : 'json',
             success: function(response){
                 const data = response.data;
-                console.log(data)
+                $("#logContent").html(data)
+                $('#viewLogModal').modal({
+                    keyboard: false,
+                    backdrop : 'static'
+                })
                 
             },
             error: function(error){
