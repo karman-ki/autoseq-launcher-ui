@@ -52,9 +52,11 @@ $(document).ready(function(){
                 $.each(jsonData,function(key, value){
                     const project_status = value['pro_status']
                     let button_info = ''
+                    let edit_btn_enable = ''
                     if(project_status == '0'){
                         button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline" data-id="'+value['p_id']+'">Yet to Start</button>';
                     }else if(project_status == '1'){
+                        edit_btn_enable = 'disabled'
                         button_info = '<button type="button" class="btn bg-primary btn-sm">In-progress</button>';
                     }else if(project_status == '2'){
                         button_info = '<span class="btn btn-danger btn-sm mr-1">Failed</span> <button type="button" class="btn bg-secondary btn-sm start-pipeline" data-id="'+value['p_id']+'">Re-Start</button>';
@@ -65,9 +67,14 @@ $(document).ready(function(){
                     project_list_table += '<tr>'+
                                 '  <td>'+value['sample_id']+'</td>'+
                                 '  <td>'+value['cfdna']+'</br>'+value['normal']+'</td>'+
-                                '  <td>'+value['config_path']+'</td>'+
+                                '  <td>'+value['cores']+'</td>'+
+                                '  <td>'+value['machine_type']+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+button_info+'</td>'+
+                                '  <td>'+
+                                        '<button type="button" class="btn bg-default btn-sm btnEdit" '+edit_btn_enable+' data-id="'+value['p_id']+' "><i class="fas fa-edit fa-lg"></i></button>'+
+                                        '<button type="button" class="btn bg-default btn-sm btnView" data-id="'+value['p_id']+' "><i class="fas fa-info-circle fa-lg"></i></button>'+
+                                '</td>'+
                                 '</tr>';
                 })
                 $("#tb_project_list tbody").html(project_list_table);
@@ -109,6 +116,66 @@ $(document).ready(function(){
         const p_id = $(this).attr('data-id');
         start_pipeline(p_id)
     })
+
+    $(document).on("click", ".btnEdit", function(){
+        const p_id = $(this).attr('data-id');
+        editCoreMacineInfo(p_id)
+    })
+
+    $(document).on("click", ".update-analysis-info", function(){
+        const p_id = $("#project_id").val();
+        const cores = $("#cores").val();
+        const machine_type = $("#machine_type option:selected").val();
+        updateAnalysisInfo(p_id, cores, machine_type)
+    })
+
+    function updateAnalysisInfo(p_id, cores, machine_type){
+        const param = {'project_id': p_id, 'cores': cores, 'machine_type': machine_type}
+        $.ajax({
+            url: base_url+'updateAnalysisInfo',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                const data = response.data;
+                console.log(data)
+                if(response.status == true) {                
+                    $("#editAnalysis").modal('toggle');
+                    $('#tb_project_list').DataTable().destroy();
+                    getProjectList()
+                }
+            },
+            error: function(error){
+                console.log(error);
+            }
+        }); 
+    }
+
+    function editCoreMacineInfo(p_id) {
+        const param = {'project_id': p_id}
+        $.ajax({
+            url: base_url+'editAnalysisInfo',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                const data = response.data;
+                $("#project_id").val(data[0]['p_id'])
+                $("#sample_id").val(data[0]['sample_id'])
+                $("#cores").val(data[0]['cores'] == 'None' ? '' : data[0]['cores'])
+                $("#machine_type").val(data[0]['machine_type'] == 'None' ? '' : data[0]['machine_type'])
+                $('#editAnalysis').modal({
+                    keyboard: false,
+                    backdrop : 'static'
+                })
+
+            },
+            error: function(error){
+                console.log(error);
+            }
+        }); 
+    
+    }
 
     function start_pipeline(p_id) {
         const param = {'project_id': p_id}

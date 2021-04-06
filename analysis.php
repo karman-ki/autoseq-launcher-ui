@@ -45,8 +45,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           <tr>
                             <th>Sample ID</th>
                             <th>Barcode Details</th>
-                            <th>Config Path</th>
+                            <th>Cores </th>
+                            <th>Machine Type</th>
                             <th>Create Time</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -54,8 +56,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           <tr>
                             <th>Sample ID</th>
                             <th>Barcode Details</th>
-                            <th>Config Path</th>
+                            <th>Cores </th>
+                            <th>Machine Type</th>                            
                             <th>Create Time</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </tfoot>
@@ -72,6 +76,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.content -->
   </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="editAnalysis">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Analysis Information</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type='hidden' id="project_id" value=''>
+          <div class="form-group row">
+            <label for="sample_id" class="col-sm-4 col-form-label">Sample ID</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="sample_id" value="">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="cores" class="col-sm-4 col-form-label">Cores</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="cores" placeholder="Cores">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="machine_type" class="col-sm-4 col-form-label">Machine Type</label>
+            <div class="col-sm-8">
+            <select class="custom-select" id="machine_type">
+              <option value=''>Choose...</option>
+              <option value="anchorage">Anchorage</option>
+              <option value="scalar">Scalar</option>
+              <option value="vector">Vector</option>
+            </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary update-analysis-info">Update</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
