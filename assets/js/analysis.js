@@ -142,7 +142,7 @@ $(document).ready(function(){
             data: param,
             dataType : 'json',
             success: function(response){
-                const data = response.data;
+                const data = response;
                 if(data.status == true) {                
                     $("#editAnalysis").modal('toggle');
                     $('#tb_project_list').DataTable().destroy();
