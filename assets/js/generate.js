@@ -8,6 +8,24 @@ $(document).ready(function(){
     $("#barcode-list").html("")
 
     
+    toastr.options = {
+        "closeButton": true,
+        "debug": true,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
     let server = "";
     function loadConfigFile() {
         $.ajax({
@@ -16,10 +34,9 @@ $(document).ready(function(){
             async:false,
             success: function(response){
                 server = response.server;
-                console.log(server)	
             },
             error: function(error){
-                console.log(error);
+                toastr['error'](error);
             }
         });
 
@@ -46,7 +63,6 @@ $(document).ready(function(){
         const project_name = $("#project_name option:selected").val()
         const search_pattern = $("#search_pattern").val()
         const orderform_file = $(".custom-file-input").val()
-        console.log(project_name, search_pattern, orderform_file)
         if((project_name != '' && search_pattern != '') || (project_name != '' && orderform_file != '')){
             if(search_pattern){
                 generate_barcode(base_url,project_name, search_pattern, orderform_file, '')
@@ -55,7 +71,7 @@ $(document).ready(function(){
                 getSampleInfo(fileUpload, project_name)
             }
         }else{
-            alert("Please provide mandatory fields.");
+            toastr["error"]("Please provide mandatory fields.")
         }
     })
 
@@ -86,10 +102,10 @@ $(document).ready(function(){
                     sample_list = reader.readAsArrayBuffer(fileUpload.files[0]);
                 }
             } else {
-                alert("This browser does not support HTML5.");
+                toastr["error"]("This browser does not support HTML5.");
             }
         } else {
-            alert("Please upload a valid Excel file.");
+            toastr["error"]("Please upload a valid Excel file.");
         }
 
     }
@@ -97,7 +113,6 @@ $(document).ready(function(){
     function processExcel(data, project_name, file_name) {
 
         const regex_patt = regex_dict[project_name]
-        console.log(regex_patt)
        //Read the Excel File data.
        const workbook = XLSX.read(data, {
             type: 'binary'
@@ -135,14 +150,12 @@ $(document).ready(function(){
             data: param,
             dataType : 'json',
             success: function(response){
-                console.log(response)
                 const data = response['data']
                 if(data.length > 0){
                     const barcoed_list = data[0]['file_list']
                     const barcoed_id = data[0]['b_id']
                     let barcode_li = '<ol>'
                     $.each(barcoed_list, function(key,val){
-                        console.log(key,val)
                         barcode_li += '<li><span>'+val+'</span></li>'
                     })
                     barcode_li +='</ol>'
@@ -151,11 +164,15 @@ $(document).ready(function(){
                                 '</p>'
                     $("#barcode-list").html(barcode_li)
                     $("#barcode-details").show()
+                    toastr['success']('Barcode generate successfully')
+                }else{
+                    toastr['error'](response['error'])
                 }
                
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         });   
     }
@@ -174,16 +191,17 @@ $(document).ready(function(){
             data: param,
             dataType : 'json',
             success: function(response){
-                console.log(response)
                 const data = response['data']
-                console.log(data.length)
                 if(data.length > 0){
+                    toastr['success']('Generate Config file')
                     window.location.href='../../analysis.php'
+                }else{
+                    toastr['error'](response['error'])
                 }
-               
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         });   
     }

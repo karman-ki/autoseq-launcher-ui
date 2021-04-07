@@ -13,5 +13,7 @@
 <script src="assets/js/datatable/buttons.print.min.js"></script>
 <script src="assets/js/datatable/buttons.colVis.min.js"></script>
 
+<script src="assets/js/toastr/toastr.js"></script>
+
 <!-- AdminLTE App -->
 <script src="assets/js/adminlte/adminlte.min.js"></script>

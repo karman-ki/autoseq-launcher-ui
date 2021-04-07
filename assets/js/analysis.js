@@ -5,6 +5,24 @@ $(document).ready(function(){
     $("#nav-li-analysis").addClass('active'); 
 
 
+    toastr.options = {
+        "closeButton": true,
+        "debug": true,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
     let server = "";
     function loadConfigFile() {
         $.ajax({
@@ -16,7 +34,7 @@ $(document).ready(function(){
                 console.log(server)	
             },
             error: function(error){
-                console.log(error);
+                toastr['error'](error);
             }
         });
 
@@ -106,8 +124,9 @@ $(document).ready(function(){
                     }
                 });
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         });   
     }
@@ -137,20 +156,24 @@ $(document).ready(function(){
     function updateAnalysisInfo(p_id, cores, machine_type){
         const param = {'project_id': p_id, 'cores': cores, 'machine_type': machine_type}
         $.ajax({
-            url: base_url+'updateAnalysisInfo',
+            url: base_url+'update_analysis_info',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
                 const data = response;
-                if(data.status == true) {                
+                if(data.status == true) {
+                    toastr['success'](data['data']);
                     $("#editAnalysis").modal('toggle');
                     $('#tb_project_list').DataTable().destroy();
                     getProjectList()
+                }else{
+                    toastr['error'](data['error']);
                 }
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         }); 
     }
@@ -158,24 +181,29 @@ $(document).ready(function(){
     function editCoreMacineInfo(p_id) {
         const param = {'project_id': p_id}
         $.ajax({
-            url: base_url+'editAnalysisInfo',
+            url: base_url+'edit_analysis_info',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
                 const data = response.data;
-                $("#project_id").val(data[0]['p_id'])
-                $("#sample_id").val(data[0]['sample_id'])
-                $("#cores").val(data[0]['cores'] == 'None' ? '' : data[0]['cores'])
-                $("#machine_type").val(data[0]['machine_type'] == 'None' ? '' : data[0]['machine_type'])
-                $('#editAnalysis').modal({
-                    keyboard: false,
-                    backdrop : 'static'
-                })
+                if(data.length > 0){
+                    $("#project_id").val(data[0]['p_id'])
+                    $("#sample_id").val(data[0]['sample_id'])
+                    $("#cores").val(data[0]['cores'] == 'None' ? '' : data[0]['cores'])
+                    $("#machine_type").val(data[0]['machine_type'] == 'None' ? '' : data[0]['machine_type'])
+                    $('#editAnalysis').modal({
+                        keyboard: false,
+                        backdrop : 'static'
+                    })
+                }else{
+                    toastr['error'](response['error'])
+                }
 
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         }); 
     }
@@ -184,17 +212,21 @@ $(document).ready(function(){
     function viewCoreMacineInfo(p_id) {
         const param = {'project_id': p_id}
         $.ajax({
-            url: base_url+'viewAnalysisInfo',
+            url: base_url+'view_analysis_info',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
                 const data = response.data;
-                console.log(data)
-
+                if(data.length > 0){
+                    console.log(data)
+                }else{
+                    toastr['error'](response['error'])
+                }
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         }); 
     }
@@ -207,11 +239,18 @@ $(document).ready(function(){
             data: param,
             dataType : 'json',
             success: function(response){
-                $('#tb_project_list').DataTable().destroy();
-                getProjectList()
+                if(response.data){
+                    toastr['success'](response['data']);
+                    $('#tb_project_list').DataTable().destroy();
+                    getProjectList()
+                }else{
+                    toastr['error'](response['error'])
+                }
+
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         }); 
     }

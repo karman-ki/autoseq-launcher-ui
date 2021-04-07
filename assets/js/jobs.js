@@ -4,9 +4,23 @@ $(document).ready(function(){
     $(selector).removeClass('active');
     $("#nav-li-job").addClass('active'); 
 
-    $("#barcode-details").hide()
-    $("#barcode-list").html("")
-
+    toastr.options = {
+        "closeButton": true,
+        "debug": true,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
     
     let server = "";
     function loadConfigFile() {
@@ -19,7 +33,7 @@ $(document).ready(function(){
                 console.log(server)	
             },
             error: function(error){
-                console.log(error);
+                toastr['error'](error);
             }
         });
 
@@ -105,8 +119,9 @@ $(document).ready(function(){
                     }
                 });
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         });   
     }
@@ -132,8 +147,9 @@ $(document).ready(function(){
                 })
                 
             },
-            error: function(error){
-                console.log(error);
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
             }
         }); 
     }

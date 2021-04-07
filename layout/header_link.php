@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="assets/css/bootstrap/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="assets/css/bootstrap/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="assets/css/bootstrap/buttons.bootstrap4.min.css">
+
+<link href="assets/css/toastr/toastr.css" rel="stylesheet" type="text/css" />
 <!-- Theme style -->
 <link rel="stylesheet" href="assets/css/adminlte/adminlte.min.css">
 <link rel="stylesheet" href="assets/css/custom_ctm.css">
