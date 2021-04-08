@@ -138,11 +138,12 @@ $(document).ready(function(){
                 sample_arr += excelRows[i]['__EMPTY'] +','
             }
         }
-
         generate_barcode(base_url,project_name, '',sample_arr.replace(/,\s*$/, ""), file_name)
     }
+
     function generate_barcode(base_url, project_name, search_pattern, orderfromList, file_name) {
-        $("#barcode-list").html("")
+        $("#barcode-list").html('<div class="loader">Loading...</div>')
+        $("#barcode-details").show()
         const param = {'project_name': project_name, 'search_pattern': search_pattern, 'sample_arr': orderfromList, 'file_name': file_name}
         $.ajax({
             url: base_url+'generate_barcode',
@@ -167,6 +168,7 @@ $(document).ready(function(){
                     toastr['success']('Barcode generate successfully')
                 }else{
                     toastr['error'](response['error'])
+                    $("#barcode-details").hide()
                 }
                
             },

@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <table id="tb_job_list" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>Job Id</th>
+                      <th>#</th>
                       <th>Project_id</th>
                       <th>Cores / Machine Type</th>
                       <th>Job status</th>  

@@ -57,6 +57,10 @@ $(document).ready(function(){
         $(this).html( '<input type="text" class="input-sm" placeholder="'+title+'" />' );
      });
 
+    // $(document).on("click", ".job-refresh", function(){
+    //     $('#tb_job_list').DataTable().destroy();
+    //     getJobList()
+    // })
 
     function getJobList() {
         $.ajax({
@@ -71,13 +75,13 @@ $(document).ready(function(){
                     const project_status = value['job_status']
                     let status_info = ''
                     if(project_status == '0'){
-                        status_info = '<span class="btn btn-info btn-sm">In-progess</span>';
+                        status_info = '<span class="text-info font-weight-bold">In-progess</span>';
                     }else if(project_status == '1'){
-                        status_info = '<span class="btn btn-warning btn-sm">Warning</span>';
+                        status_info = '<span class="text-warning font-weight-bold">Warning</span>';
                     }else if(project_status == '2'){
-                        status_info = '<span class="btn btn-danger btn-sm">Failed</span>';
+                        status_info = '<span class="text-danger font-weight-bold">Failed</span>';
                     }else if(project_status == '-1'){
-                        status_info = '<span class="btn btn-success btn-sm">Completed</span>';
+                        status_info = '<span class="text-success font-weight-bold">Completed</span>';
                     }
 
                     project_list_table += '<tr>'+
@@ -87,11 +91,12 @@ $(document).ready(function(){
                                 '  <td>'+status_info+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+value['update_time']+'</td>'+
-                                '  <td><a class="btn btn-primary btn-sm btnLogView"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-folder pr-1"></i>Log</a></td>'+
+                                '  <td><a class="btn btn-info btn-sm btnLogView"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-file pr-1"></i>Log</a></td>'+
                                 '</tr>';
                 })
                 $("#tb_job_list tbody").html(project_list_table);
                 $('#tb_job_list').DataTable({
+                    'processing': true,
                     "paging": true,
                     "lengthChange": true,
                     "searching": true,
@@ -99,9 +104,12 @@ $(document).ready(function(){
                     "info": true,
                     "autoWidth": false,
                     "responsive": true,
-                    "order": [[0, "desc" ]],
+                    "order": [[4, "desc" ]],
                     "language": {
-                    "emptyTable": "No Job information available"
+                        "emptyTable": "No Job information available",
+                        'loadingRecords': '&nbsp;',
+                        'processing': '<div class="loader">Loading...</div>'
+
                     },
                     initComplete: function () {
                         // Apply the search
@@ -134,17 +142,22 @@ $(document).ready(function(){
     function getLoginfo(job_id){
         const param = {'job_id': job_id}
         $.ajax({
-            url: base_url+'getPipelineLog',
+            url: base_url+'get_pipeline_log',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
                 const data = response.data;
-                $("#logContent").html(data)
-                $('#viewLogModal').modal({
-                    keyboard: false,
-                    backdrop : 'static'
-                })
+                if(data.length > 0){
+                    $("#logContent").html(data)
+                    $('#viewLogModal').modal({
+                        keyboard: false,
+                        backdrop : 'static'
+                    })
+                }else{
+                    toastr['error'](response['error']);
+                }
+                
                 
             },
             error: function(response, error){
