@@ -44,6 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>#</th>
                       <th>Project_id</th>
                       <th>Cores / Machine Type</th>
+                      <th>Pipeline Command</th>
                       <th>Job status</th>  
                       <th>Create Time</th>
                       <th>Update Time</th>                 
@@ -55,6 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Job Id</th>
                       <th>Project_id</th>
                       <th>Cores / Machine Type</th>
+                      <th>Pipeline Command</th>
                       <th>Job status</th>  
                       <th>Create Time</th>
                       <th>Update Time</th>                  

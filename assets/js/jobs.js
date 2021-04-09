@@ -88,6 +88,7 @@ $(document).ready(function(){
                                 '  <td>'+value['job_id']+'</td>'+
                                 '  <td>'+value['sample_id']+'</td>'+
                                 '  <td>'+value['cores']+'</br>'+value['machine_type']+'</td>'+
+                                '  <td>'+value['pipeline_cmd']+'</td>'+
                                 '  <td>'+status_info+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+value['update_time']+'</td>'+
