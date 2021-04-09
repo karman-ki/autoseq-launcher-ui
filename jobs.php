@@ -38,28 +38,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col">
             <div class="card card-primary card-outline">
               <div class="card-body">
-                <table id="tb_job_list" class="table table-bordered table-hover">
+                <table id="tb_job_list" class="table table-bordered table-hover table-responsive">
                   <thead>
                     <tr>
                       <th>#</th>
                       <th>Project_id</th>
-                      <th>Cores / Machine Type</th>
                       <th>Pipeline Command</th>
                       <th>Job status</th>  
                       <th>Create Time</th>
-                      <th>Update Time</th>                 
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Job Id</th>
+                      <th>#</th>
                       <th>Project_id</th>
-                      <th>Cores / Machine Type</th>
                       <th>Pipeline Command</th>
                       <th>Job status</th>  
                       <th>Create Time</th>
-                      <th>Update Time</th>                  
                       <th>Action</th>
                     </tr>
                   </tfoot>

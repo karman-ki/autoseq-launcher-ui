@@ -87,11 +87,10 @@ $(document).ready(function(){
                     project_list_table += '<tr>'+
                                 '  <td>'+value['job_id']+'</td>'+
                                 '  <td>'+value['sample_id']+'</td>'+
-                                '  <td>'+value['cores']+'</br>'+value['machine_type']+'</td>'+
-                                '  <td>'+value['pipeline_cmd']+'</td>'+
+                                // '  <td>'+value['cores']+'</br>'+value['machine_type']+'</td>'+
+                                '  <td><small>'+value['pipeline_cmd']+'</small></td>'+
                                 '  <td>'+status_info+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
-                                '  <td>'+value['update_time']+'</td>'+
                                 '  <td><a class="btn btn-info btn-sm btnLogView"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-file pr-1"></i>Log</a></td>'+
                                 '</tr>';
                 })
@@ -104,8 +103,16 @@ $(document).ready(function(){
                     "ordering": true,
                     "info": true,
                     "autoWidth": false,
-                    "responsive": true,
+                    "responsive": false,
                     "order": [[4, "desc" ]],
+                    "columnDefs": [
+                        { "width": "2%", "targets": 0 },
+                        { "width": "2%", "targets": 1 },
+                        { "width": "90%", "targets": 2 },
+                        { "width": "2%", "targets": 3 },
+                        { "width": "2%", "targets": 4 },
+                        { "width": "2%", "targets": 5 },
+                    ],
                     "language": {
                         "emptyTable": "No Job information available",
                         'loadingRecords': '&nbsp;',
