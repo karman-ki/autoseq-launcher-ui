@@ -48,8 +48,18 @@ $(document).ready(function(){
     }else{
         loadConfigFile();
     }
-        
 
+    $("#sample_processing_step").on("change", function() {
+        const sample_option = $(this).val();
+        $(".single-sample, .multiple-sample").hide()
+        $("."+sample_option).show()
+        $("#barcode-details").hide()
+        $("#barcode-list").html("")
+        $("input:text").val("");
+        $(".custom-file-label").html("");
+        $(".custom-file-input").val("");
+    })
+        
     // const server = 'localhost'
     const base_url = 'http://'+server+':8100/api/CTM/' ;
     const regex_dict = {'PROBIO': /^(PB-P-)(.*)/, 'PSFF' : /^(PSFF-P-)(.*)/};
@@ -61,15 +71,23 @@ $(document).ready(function(){
 
     $(".form-submit").on('click', function(){
         const project_name = $("#project_name option:selected").val()
-        const search_pattern = $("#search_pattern").val()
         const orderform_file = $(".custom-file-input").val()
-        if((project_name != '' && search_pattern != '') || (project_name != '' && orderform_file != '')){
-            if(search_pattern){
-                generate_barcode(base_url,project_name, search_pattern, orderform_file, '')
-            }else if(orderform_file){
-                const fileUpload = $("#orderFormfile")[0];
-                getSampleInfo(fileUpload, project_name)
-            }
+        if(project_name != '' && orderform_file != ''){
+            const fileUpload = $("#orderFormfile")[0];
+            getSampleInfo(fileUpload, project_name)
+        }else{
+            toastr["error"]("Please provide mandatory fields.")
+        }
+    })
+
+    $(".search-sample-submit").on('click', function(){
+        const project_name = $("#project_name option:selected").val()
+        const ssid = $("#ssid").val()
+        const sid = $("#sid-1").val() + ',' + $("#sid-2").val()
+        const germline = $("#germline").val()
+
+        if(project_name != '' && ssid != '' && sid != '' && germline != ''){
+            sample_generate_barcode(base_url, project_name, ssid, sid, germline)
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -138,15 +156,18 @@ $(document).ready(function(){
                 sample_arr += excelRows[i]['__EMPTY'] +','
             }
         }
-        generate_barcode(base_url,project_name, '',sample_arr.replace(/,\s*$/, ""), file_name)
+        console.log(sample_arr)
+        // generate_barcode(base_url,project_name, '',sample_arr.replace(/,\s*$/, ""), file_name)
+        uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name)
     }
 
-    function generate_barcode(base_url, project_name, search_pattern, orderfromList, file_name) {
+    function uploadOrderform(base_url, project_name, sample_arr, file_name){
         $("#barcode-list").html('<div class="loader">Loading...</div>')
         $("#barcode-details").show()
-        const param = {'project_name': project_name, 'search_pattern': search_pattern, 'sample_arr': orderfromList, 'file_name': file_name}
+
+        const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name}
         $.ajax({
-            url: base_url+'generate_barcode',
+            url: base_url+'upload_orderform',
             type: 'POST',
             data: param,
             dataType : 'json',
@@ -176,8 +197,85 @@ $(document).ready(function(){
                 const err_text = response.responseJSON
                 toastr['error'](err_text['error']);
             }
-        });   
+        });
     }
+
+    function sample_generate_barcode(base_url, project_name, ssid, sid, germline){
+        $("#barcode-list").html('<div class="loader">Loading...</div>')
+        $("#barcode-details").show()
+
+        const param = {'project_name': project_name, 'ssid': ssid, 'sid': sid, 'germline': germline}
+        $.ajax({
+            url: base_url+'sample_generate_barcode',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                const data = response['data']
+                if(data.length > 0){
+                    const barcoed_list = data[0]['file_list']
+                    const barcoed_id = data[0]['b_id']
+                    let barcode_li = '<ol>'
+                    $.each(barcoed_list, function(key,val){
+                        barcode_li += '<li><span>'+val+'</span></li>'
+                    })
+                    barcode_li +='</ol>'
+                    barcode_li +='<p> '+
+                                '<button type="button" class="btn bg-info btn-md btn-flat col-2 float-right generate-config" data-id="'+barcoed_id+'">Generate Config file</button>'+
+                                '</p>'
+                    $("#barcode-list").html(barcode_li)
+                    $("#barcode-details").show()
+                    toastr['success']('Barcode generate successfully')
+                }else{
+                    toastr['error'](response['error'])
+                    $("#barcode-details").hide()
+                }
+               
+            },
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
+            }
+        });
+    }
+
+    // function generate_barcode(base_url, project_name, search_pattern, orderfromList, file_name) {
+    //     $("#barcode-list").html('<div class="loader">Loading...</div>')
+    //     $("#barcode-details").show()
+    //     const param = {'project_name': project_name, 'search_pattern': search_pattern, 'sample_arr': orderfromList, 'file_name': file_name}
+    //     $.ajax({
+    //         url: base_url+'generate_barcode',
+    //         type: 'POST',
+    //         data: param,
+    //         dataType : 'json',
+    //         success: function(response){
+    //             const data = response['data']
+    //             if(data.length > 0){
+    //                 const barcoed_list = data[0]['file_list']
+    //                 const barcoed_id = data[0]['b_id']
+    //                 let barcode_li = '<ol>'
+    //                 $.each(barcoed_list, function(key,val){
+    //                     barcode_li += '<li><span>'+val+'</span></li>'
+    //                 })
+    //                 barcode_li +='</ol>'
+    //                 barcode_li +='<p> '+
+    //                             '<button type="button" class="btn bg-info btn-md btn-flat col-2 float-right generate-config" data-id="'+barcoed_id+'">Generate Config file</button>'+
+    //                             '</p>'
+    //                 $("#barcode-list").html(barcode_li)
+    //                 $("#barcode-details").show()
+    //                 toastr['success']('Barcode generate successfully')
+    //             }else{
+    //                 toastr['error'](response['error'])
+    //                 $("#barcode-details").hide()
+    //             }
+               
+    //         },
+    //         error: function(response, error){
+    //             const err_text = response.responseJSON
+    //             toastr['error'](err_text['error']);
+    //         }
+    //     });   
+    // }
 
     $(document).on("click", ".generate-config", function(){
         const bar_id = $(this).attr('data-id');

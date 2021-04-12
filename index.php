@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-2 mr-3">
                     <div class="form-group">
-                      <label>Project List</label>
+                      <label class="mandatory">Project List</label>
                       <select class="custom-select" id="project_name">
                         <option value="">-- Select project --</option>
                         <option value="PROBIO">PROBIO</option>
@@ -44,37 +44,73 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-8 mr-3">
-                    <div class="wrapper-divider row">
-                        <div class="col-6 ml-5">
+                  <div class="col-2 mr-3">
+                    <div class="form-group">
+                      <label class="mandatory">Sample Processing Step</label>
+                      <select class="custom-select" id="sample_processing_step">
+                        <option value="">-- Select  --</option>
+                        <option value="multiple-sample">Multiple Sample</option>
+                        <option value="single-sample">Single Sample</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6 mr-3 multiple-sample">
+                    <div class="row">
+                        <div class="col-10">
                             <div class="form-group">
-                                <label>Upload Orderform</label>
+                                <label class="mandatory">Upload Orderform</label>
                                 <div class="custom-file mb-3">
                                     <input type="file" class="custom-file-input" id="orderFormfile" name="filename">
                                     <label class="custom-file-label" for="orderFormfile">Choose file</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-1">
-                            <div class="divider">
-                                <div class="or-separator">
-                                    <div class="vertical-line"></div>
-                                    <div>OR</div>
-                                    <div class="vertical-line"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Search pattern</label>
-                                <input type="text" class="form-control" placeholder="eg: PN20210210" id="search_pattern">
-                            </div>
+                        <div class="col-2">
+                          <div class="form-group generate-btn">
+                            <button type="button" class="btn btn-block bg-gradient-info btn-md btn-flat form-submit">Submit</button>
+                          </div>
                         </div>
                     </div>
                   </div>
-                  <div class="col-1">
-                    <div class="form-group generate-btn">
-                      <button type="button" class="btn btn-block bg-gradient-info btn-md btn-flat form-submit">Submit</button>
+                  <div class="col-6 mr-3 single-sample">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="mandatory">SSID</label>
+                                <div class="mb-3">
+                                  <input type="text" class="form-control" id="ssid" placeholder="P-0031289">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="mandatory">SID 1</label>
+                                <div class="mb-3">
+                                  <input type="text" class="form-control" id="sid-1" placeholder="0809123">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label>SID 2</label>
+                                <div class="mb-3">
+                                  <input type="text" class="form-control" id="sid-2" placeholder="0809123">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="mandatory">Germline</label>
+                                <div class="mb-3">
+                                  <input type="text" class="form-control" id="germline" placeholder="0809124">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="form-group generate-btn">
+                            <button type="button" class="btn btn-block bg-gradient-info btn-md btn-flat search-sample-submit">Submit</button>
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>

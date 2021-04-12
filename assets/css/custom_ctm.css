@@ -24,6 +24,9 @@ li.active {
 
 }
 
+.single-sample, .multiple-sample, #barcode-details{
+  display: none;
+}
 
 ol {
   counter-reset: item;
@@ -60,7 +63,7 @@ tfoot {
   padding:5px;
 }
 
-.form-group label:after {
+.form-group label.mandatory:after {
   color: #e32;
   content: ' *';
   display:inline;
