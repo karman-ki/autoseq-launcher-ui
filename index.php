@@ -46,15 +46,15 @@
                   </div>
                   <div class="col-2 mr-3">
                     <div class="form-group">
-                      <label class="mandatory">Sample Processing Step</label>
+                      <label class="mandatory">Autoseq Launch Step</label>
                       <select class="custom-select" id="sample_processing_step">
                         <option value="">-- Select  --</option>
-                        <option value="multiple-sample">Multiple Sample</option>
-                        <option value="single-sample">Single Sample</option>
+                        <option value="upload">Upload</option>
+                        <option value="sample">Sample Ids</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-6 mr-3 multiple-sample">
+                  <div class="col-6 mr-3 upload">
                     <div class="row">
                         <div class="col-10">
                             <div class="form-group">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                   </div>
-                  <div class="col-6 mr-3 single-sample">
+                  <div class="col-6 mr-3 sample">
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group">
-                                <label class="mandatory">SID 1</label>
+                                <label class="mandatory">SID 1 (CFDNA)</label>
                                 <div class="mb-3">
                                   <input type="text" class="form-control" id="sid-1" placeholder="0809123">
                                 </div>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group">
-                                <label>SID 2</label>
+                                <label>SID 2 (CFDNA)</label>
                                 <div class="mb-3">
                                   <input type="text" class="form-control" id="sid-2" placeholder="0809123">
                                 </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group">
-                                <label class="mandatory">Germline</label>
+                                <label class="mandatory">Germline (N)</label>
                                 <div class="mb-3">
                                   <input type="text" class="form-control" id="germline" placeholder="0809124">
                                 </div>

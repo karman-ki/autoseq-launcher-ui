@@ -24,7 +24,7 @@ li.active {
 
 }
 
-.single-sample, .multiple-sample, #barcode-details{
+.sample, .upload, #barcode-details{
   display: none;
 }
 
@@ -162,4 +162,18 @@ a.btn.disabled {
     box-shadow: 0 -2em;
     height: 5em;
   }
+}
+
+.log-list{
+  list-style: none;
+  margin: 1.75rem 0;
+  padding-left: 1rem;
+} 
+
+.log-items {
+    background: gainsboro;
+    @extend %boxshadow: ;
+    margin-top: 1rem;
+    padding: 0.2rem 1rem 0.1rem 1rem;
+
 }

@@ -72,10 +72,10 @@ $(document).ready(function(){
                     let button_info = ''
                     let edit_btn_enable = ''
                     if(project_status == '0'){
-                        button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline" data-id="'+value['p_id']+'">Yet to Start</button>';
+                        button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline" data-id="'+value['p_id']+'">Start</button>';
                     }else if(project_status == '1'){
                         edit_btn_enable = 'disabled'
-                        button_info = '<button type="button" class="btn bg-primary btn-sm">In-progress</button>';
+                        button_info = '<button type="button" class="btn bg-primary btn-sm">Running</button>';
                     }else if(project_status == '2'){
                         button_info = '<span class="btn btn-danger btn-sm mr-1">Failed</span> <button type="button" class="btn bg-secondary btn-sm start-pipeline" data-id="'+value['p_id']+'">Re-Start</button>';
                     }else if(project_status == '-1'){

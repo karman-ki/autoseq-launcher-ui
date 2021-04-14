@@ -157,7 +157,19 @@ $(document).ready(function(){
             success: function(response){
                 const data = response.data;
                 if(data.length > 0){
-                    $("#logContent").html(data)
+		    
+		    let log_content = '<ul class="log-list">'
+		    data_arr = data.split(/INFO|WARNING|DEBUG|ERROR|CRITICAL/)
+		    $.each(data_arr, function(key, val){
+			console.log(val)
+			val = val.replace('\n', '') 
+			if(val){
+			   log_content += '<li class="log-items"><p>'+val+'</p></li>'
+			}
+		    })
+		    log_content += '</ul>'
+
+		    $("#logContent").html(log_content)
                     $('#viewLogModal').modal({
                         keyboard: false,
                         backdrop : 'static'

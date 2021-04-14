@@ -71,8 +71,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content -->
   </div>
 
-  <div class="modal bd-example-modal-lg" tabindex="-1" role="dialog" id="viewLogModal">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal  bd-example-modal-xl" tabindex="-1" role="dialog" id="viewLogModal">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Log Information</h5>

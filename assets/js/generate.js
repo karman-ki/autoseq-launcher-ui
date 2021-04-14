@@ -51,7 +51,7 @@ $(document).ready(function(){
 
     $("#sample_processing_step").on("change", function() {
         const sample_option = $(this).val();
-        $(".single-sample, .multiple-sample").hide()
+        $(".sample, .upload").hide()
         $("."+sample_option).show()
         $("#barcode-details").hide()
         $("#barcode-list").html("")
