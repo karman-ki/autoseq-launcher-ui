@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -23,7 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> Analysis List <small></small></h1>
+            <h5 class="m-0 text-uppercase"> Analysis List</h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
           </div><!-- /.col -->
@@ -33,10 +29,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-header -->
 
     <div class="content">
-      <div class="container-fluid p-md-4">
-        <div class="row">
+      <div class="container-fluid">
+        <div class="row  pb-4">
           <div class="col">
-            <div class="card card-primary card-outline">
+            <div class="card card-info card-outline">
               <div class="card-body">
                 <div class="row">
 									<div class="col-12"> 

@@ -1,6 +1,7 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.ico"/>
-<!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="assets/fontawesome-free/css/all.min.css">
 <!-- DataTables -->

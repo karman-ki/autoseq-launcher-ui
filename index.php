@@ -18,7 +18,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> Generate Barcode</h1>
+            <h5 class="m-0 text-uppercase"> Generate Barcode</h5>
           </div>
           <div class="col-sm-6">
           </div>
@@ -28,7 +28,7 @@
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid p-md-4">
+      <div class="container-fluid">
         <div class="row pb-4">
           <div class="col">
             <div class="card card-info card-outline">
@@ -54,7 +54,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-6 mr-3 upload">
+                  <div class="col-6 mr-3 upload vertical-line">
                     <div class="row">
                         <div class="col-10">
                             <div class="form-group">
@@ -67,12 +67,12 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group generate-btn">
-                            <button type="button" class="btn btn-block bg-gradient-info btn-md btn-flat form-submit">Submit</button>
+                            <button type="button" class="btn bg-gradient-info btn-lg form-submit">Submit</button>
                           </div>
                         </div>
                     </div>
                   </div>
-                  <div class="col-6 mr-3 sample">
+                  <div class="col-6 mr-3 sample vertical-line">
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group generate-btn">
-                            <button type="button" class="btn btn-block bg-gradient-info btn-md btn-flat search-sample-submit">Submit</button>
+                            <button type="button" class="btn bg-gradient-info btn-lg form-submit">Submit</button>
                           </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
           <div class="col">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title m-0">Barcode file list</h5>
+                <h5 class="card-title m-0 text-uppercase">Barcode file list</h5>
               </div>
               <div class="card-body">
                   <div id="barcode-list">

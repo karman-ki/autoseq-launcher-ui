@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -23,7 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1 class="m-0"> Jobs List <small></small></h1>
+						<h5 class="m-0 text-uppercase"> Jobs List</h5>
 					</div><!-- /.col -->
 					<div class="col-sm-6">
 					</div><!-- /.col -->
@@ -33,16 +29,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- /.content-header -->
 
 		<div class="content">
-			<div class="container-fluid p-md-4">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col">
-						<div class="card card-primary card-outline">
+						<div class="card card-info card-outline">
 							<div class="card-body">
 								<table id="tb_job_list" class="table table-bordered table-hover table-responsive">
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Project_id</th>
+											<th>Project ID</th>
 											<th>Pipeline Command</th>
 											<th>Job status</th>  
 											<th>Create Time</th>
@@ -91,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	</div>
 </div>
 
-<div class="modal bd-example-modal-xl" tabindex="-1" role="dialog" id="viewJobModal">
+<!-- <div class="modal bd-example-modal-xl" tabindex="-1" role="dialog" id="viewJobModal">
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -135,7 +131,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							</div>
 						</div>
 					</div>
-					
 					<div class="col-12">
 						<table id="tb_job_status_list" class="table table-bordered table-hover table-responsive">
 							<thead>
@@ -167,7 +162,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 	<!-- /.content-wrapper -->
 
 	<!-- Main Footer -->
