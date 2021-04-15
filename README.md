@@ -1,2 +1,2 @@
-# curator_task_manager_ui
-Curator Task Manager - UI 
+# curator_autoseq_launcher_ui
+Curator Autoseq Launcher - UI 
