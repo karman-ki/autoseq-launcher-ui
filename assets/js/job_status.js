@@ -102,6 +102,47 @@ $(document).ready(function(){
 		});
 	}
 
+	$(document).on("click", ".view-out-path", function(){
+		const out_job_path = $(this).html();
+		getOutLoginfo(out_job_path)
+	})
+
+	function getOutLoginfo(out_job_path){
+		const param = {'out_path': out_job_path}
+		$.ajax({
+			url: base_url+'get_out_log_info',
+			type: 'POST',
+			data: param,
+			dataType : 'json',
+			success: function(response){
+				console.log(response)
+				const data = response.data;
+				if(data.length > 0){
+					let out_log_content = '<ul class="log-list">'
+					data_arr = data.split(/INFO|WARNING|DEBUG|ERROR|CRITICAL/)
+					$.each(data_arr, function(key, val){
+						val = val.replace('\n', '');
+						if(val){
+							out_log_content += '<li class="log-items"><p>'+val+'</p></li>'
+						}
+					})
+					out_log_content += '</ul>'
+					$("#outLogContent").html(out_log_content);
+					$('#viewOutLogModal').modal({
+						keyboard: false,
+						backdrop : 'static'
+					})
+				}else{
+					toastr['error'](response['error']);
+				}
+			},
+			error: function(response, error){
+				const err_text = response.responseJSON
+				toastr['error'](err_text['error']);
+				initDatatable()
+			}
+		}); 
+	}
 	function getJobStatusInfo(job_id){
 		const param = {'job_id': job_id}
 		$.ajax({
@@ -131,7 +172,7 @@ $(document).ready(function(){
 								'  <td>'+value['jobid']+'</td>'+
 								'  <td>'+value['jobname']+'</td>'+
 								'  <td><span class="font-weight-bold '+status_class+'">'+value['status']+'</span></td>'+
-								'  <td>'+value['log']+'</td>'+
+								'  <td><a href="#" class="view-out-path">'+value['log']+'</a></td>'+
 								'  <td>'+value['starttime'].split('T')[0]+'</td>'+
 								'  <td>'+value['endtime'].split('T')[0]+'</td>'+
 								'</tr>';

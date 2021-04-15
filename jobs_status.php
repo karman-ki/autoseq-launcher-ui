@@ -114,6 +114,27 @@
 	</div>
 	<!-- /.content-wrapper -->
 
+	<div class="modal  bd-example-modal-xl" tabindex="-1" role="dialog" id="viewOutLogModal">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Log Information</h5>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col">
+							<p id="outLogContent"></p>
+						</div>  
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<!-- Main Footer -->
 	<?php $path = getcwd()."/layout/"; include($path."footer.php"); ?>
 </div>
