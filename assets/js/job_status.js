@@ -118,12 +118,13 @@ $(document).ready(function(){
 				console.log(response)
 				const data = response.data;
 				if(data.length > 0){
-					let out_log_content = '<ul class="log-list">'
-					data_arr = data.split(/INFO|WARNING|DEBUG|ERROR|CRITICAL/)
+					let out_log_content = '<ul class="list-group">'
+					console.log(data)
+					data_arr = data.split('\n')
 					$.each(data_arr, function(key, val){
 						val = val.replace('\n', '');
 						if(val){
-							out_log_content += '<li class="log-items"><p>'+val+'</p></li>'
+							out_log_content += '<li class="list-group-item"><p>'+val+'</p></li>'
 						}
 					})
 					out_log_content += '</ul>'
