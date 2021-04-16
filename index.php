@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group generate-btn">
-                            <button type="button" class="btn bg-gradient-info btn-lg form-submit">Submit</button>
+                            <button type="button" class="btn bg-gradient-info btn-lg search-sample-submit">Submit</button>
                           </div>
                         </div>
                     </div>
