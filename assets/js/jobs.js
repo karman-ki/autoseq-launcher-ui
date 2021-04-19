@@ -57,10 +57,10 @@ $(document).ready(function(){
 		$(this).html( '<input type="text" class="input-sm" placeholder="'+title+'" />' );
 	 });
 
-	// $(document).on("click", ".job-refresh", function(){
-	//     $('#tb_job_list').DataTable().destroy();
-	//     getJobList()
-	// })
+	$(document).on("click", ".job-refresh", function(){
+	    $('#tb_job_list').DataTable().destroy();
+	    getJobList()
+	})
 
 	function getJobList() {
 		$.ajax({
@@ -92,8 +92,8 @@ $(document).ready(function(){
 								'  <td>'+status_info+'</td>'+
 								'  <td>'+value['create_time']+'</td>'+
 								'  <td>'+
-									'<a class="btn btn-info btn-sm btnLogView m-1"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-file pr-1"></i>Log Info</a>'+
-									'<a class="btn btn-info btn-sm"  href="jobs_status.php?id='+value['job_id']+'&'+value['sample_id']+'"><i class="fas fa-tasks pr-1"></i>Job Status</a>'+
+									'<a class="btn btn-outline-info btn-sm btnLogView m-1"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-file pr-1"></i>Logs</a>'+
+									'<a class="btn btn-outline-primary btn-sm"  href="jobs_status.php?id='+value['job_id']+'&'+value['sample_id']+'"><i class="fas fa-tasks pr-1"></i>Flow & Status</a>'+
 								'</td>'+
 								'</tr>';
 				})

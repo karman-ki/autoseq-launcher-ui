@@ -19,9 +19,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h5 class="m-0 text-uppercase"> Analysis List</h5>
+            <h5 class="m-0 text-uppercase"> List of Analyses</h5>
           </div><!-- /.col -->
           <div class="col-sm-6">
+          <button type="button" class="btn btn-md btn btn-outline-info float-right analysis-refresh"><i class="fas fa-sync-alt"></i> Refresh</button>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -36,14 +37,17 @@
               <div class="card-body">
                 <div class="row">
 									<div class="col-12"> 
+                    <div class="table-responsive">
                       <table id="tb_project_list" class="table table-bordered table-hover" >
                         <thead>
                           <tr>
                             <th>Project Name</th>
                             <th>Sample ID</th>
-                            <th>Barcode Details</th>
-                            <th>Cores / Machine Type</th>
-                            <th>Create Time</th>
+                            <th>CFDNA/T Sample</th>
+                            <th>N sample</th>
+                            <th>Cores</th>
+                            <th>Machine</th>
+                            <th>Created</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
@@ -52,9 +56,11 @@
                           <tr>
                             <th>Project Name</th>
                             <th>Sample ID</th>
-                            <th>Barcode Details</th>
-                            <th>Cores / Machine Type</th>
-                            <th>Create Time</th>
+                            <th>CFDNA/T Sample</th>
+                            <th>N sample</th>
+                            <th>Cores</th>
+                            <th>Machine</th>                            
+                            <th>Created</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
@@ -62,6 +68,7 @@
                         <tbody>
                         </tbody>
                       </table>
+                    </div>
                   </div>
                 </div>
               </div>

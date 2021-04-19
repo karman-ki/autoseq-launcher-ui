@@ -19,9 +19,10 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h5 class="m-0 text-uppercase"> Jobs List</h5>
+						<h5 class="m-0 text-uppercase"> List of Jobs</h5>
 					</div><!-- /.col -->
 					<div class="col-sm-6">
+					<button type="button" class="btn btn-md btn btn-outline-info float-right job-refresh"><i class="fas fa-sync-alt"></i> Refresh</button>
 					</div><!-- /.col -->
 				</div><!-- /.row -->
 			</div><!-- /.container-fluid -->
@@ -34,30 +35,32 @@
 					<div class="col">
 						<div class="card card-info card-outline">
 							<div class="card-body">
-								<table id="tb_job_list" class="table table-bordered table-hover table-responsive">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Project ID</th>
-											<th>Pipeline Command</th>
-											<th>Job status</th>  
-											<th>Create Time</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>#</th>
-											<th>Project_id</th>
-											<th>Pipeline Command</th>
-											<th>Job status</th>  
-											<th>Create Time</th>
-											<th>Action</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										</tbody>
-								</table>
+								<div class="table-responsive">
+									<table id="tb_job_list" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Project ID</th>
+												<th>Pipeline Command</th>
+												<th>Job status</th>  
+												<th>Create Time</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>#</th>
+												<th>Project_id</th>
+												<th>Pipeline Command</th>
+												<th>Job status</th>  
+												<th>Create Time</th>
+												<th>Action</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>

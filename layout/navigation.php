@@ -2,7 +2,7 @@
  <nav class="main-header navbar navbar-expand-md navbar-dark bg-navbar">
     <div class="container-fluid">
       <a href="index.php" class="navbar-brand">
-        <img src="assets/img/01.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+        <img src="assets/img/Cartoon_space_rocket.png" alt="AdminLTE Logo" class="brand-image">
         <span class="brand-text font-weight-bold">Autoseq Launcher</span>
       </a>
 
@@ -10,8 +10,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse order-4" id="navbarCollapse">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item" id="nav-li-home">
             <a href="index.php" class="nav-link"><i class="fas fa-home fa-fw mr-1" aria-hidden="true"></i>Home</a>
           </li>

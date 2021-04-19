@@ -52,11 +52,15 @@ $(document).ready(function(){
 
     getProjectList()
 
+    $(document).on("click", ".analysis-refresh", function(){
+        $('#tb_project_list').DataTable().destroy();
+        getProjectList()
+    })
+
     $('#tb_project_list tfoot th').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" class="input-sm" placeholder="'+title+'" />' );
      });
-
 
     function getProjectList() {
         $.ajax({
@@ -72,26 +76,34 @@ $(document).ready(function(){
                     let button_info = ''
                     let edit_btn_enable = ''
                     if(project_status == '0'){
-                        button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline" data-id="'+value['p_id']+'">Start</button>';
+                        button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline mr-1" data-id="'+value['p_id']+'">Start</button>';
                     }else if(project_status == '1'){
                         edit_btn_enable = 'disabled'
-                        button_info = '<button type="button" class="btn bg-primary btn-sm">Running</button>';
+                        button_info = '<button type="button" class="btn bg-primary btn-sm mr-1">Running</button> <button type="button" class="btn bg-danger btn-sm stop-pipeline mr-1" data-id="'+value['p_id']+'">Stop</button>';
                     }else if(project_status == '2'){
-                        button_info = '<span class="btn btn-danger btn-sm mr-1">Failed</span> <button type="button" class="btn bg-secondary btn-sm start-pipeline" data-id="'+value['p_id']+'">Re-Start</button>';
+                        button_info = '<span class="btn btn-danger btn-sm mr-1">Failed</span> <button type="button" class="btn bg-secondary btn-sm start-pipeline mr-1" data-id="'+value['p_id']+'">Re-Start</button>';
                     }else if(project_status == '-1'){
-                        button_info = '<span class="btn btn-success btn-sm">Completed</span>';
+                        button_info = '<span class="btn btn-success btn-sm mr-1">Completed</span>';
                     }
+                    const percentage = '50'
 
                     project_list_table += '<tr>'+
                                 '  <td>'+value['project_name']+'</td>'+
                                 '  <td>'+value['sample_id']+'</td>'+
-                                '  <td>'+value['cfdna']+'</br>'+value['normal']+'</td>'+
-                                '  <td>'+value['cores']+' / '+value['machine_type']+'</td>'+
+                                '  <td>'+value['cfdna']+'</td>'+
+                                '  <td>'+value['normal']+'</td>'+
+                                '  <td>'+value['cores']+'</td>'+
+                                '  <td>'+value['machine_type']+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
-                                '  <td>'+button_info+'</td>'+
                                 '  <td>'+
+                                '       <div class="progress">'+
+                                '           <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:'+percentage+'%;" aria-valuenow="'+percentage+'" aria-valuemin="0" aria-valuemax="100">'+percentage+'%</div>'+
+                                '       </div>'+
+                                '  </td>'+
+                                '  <td>'+
+                                        button_info+
                                         // '<a class="btn btn-primary btn-sm btnView mr-1"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-folder pr-1"></i>View</a>'+
-                                        '<a class="btn btn-info btn-sm btnEdit '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a>'+
+                                        '<a class="btn btn-dark btn-sm btnEdit '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a>'+
                                 '</td>'+
                                 '</tr>';
                 })
@@ -104,17 +116,17 @@ $(document).ready(function(){
                     "ordering": true,
                     "info": true,
                     "autoWidth": false,
-                    "responsive": true,
-                    "order": [[4, "desc" ]],
-                    "columnDefs": [
-                        { "width": "5%", "targets": 0 },
-                        { "width": "5%", "targets": 1 },
-                        { "width": "50%", "targets": 2 },
-                        { "width": "5%", "targets": 3 },
-                        { "width": "5%", "targets": 4 },
-                        { "width": "10%", "targets": 5 },
-                        { "width": "10%", "targets": 6 }
-                    ],
+                    "responsive": false,
+                    "order": [[6, "desc" ]],
+                    // "columnDefs": [
+                    //     { "width": "5%", "targets": 0 },
+                    //     { "width": "5%", "targets": 1 },
+                    //     { "width": "50%", "targets": 2 },
+                    //     { "width": "5%", "targets": 3 },
+                    //     { "width": "5%", "targets": 4 },
+                    //     { "width": "10%", "targets": 5 },
+                    //     { "width": "10%", "targets": 6 }
+                    // ],
                     "language": {
                         "emptyTable": "No Project information available",
                         'processing': '<div class="loader">Loading...</div>'
@@ -146,6 +158,35 @@ $(document).ready(function(){
         const p_id = $(this).attr('data-id');
         start_pipeline(p_id)
     })
+
+    $(document).on("click", ".stop-pipeline", function(){
+        const p_id = $(this).attr('data-id');
+        stop_pipeline(p_id)
+    })
+
+    function stop_pipeline(p_id){
+        const param = {'project_id': p_id}
+        $.ajax({
+            url: base_url+'stop_pipline',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                if(response.data){
+                    toastr['success'](response['data']);
+                    $('#tb_project_list').DataTable().destroy();
+                    getProjectList()
+                }else{
+                    toastr['error'](response['error'])
+                }
+
+            },
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
+            }
+        }); 
+    }
 
     $(document).on("click", ".btnEdit", function(){
         const p_id = $(this).attr('data-id');

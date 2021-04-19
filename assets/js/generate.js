@@ -64,6 +64,18 @@ $(document).ready(function(){
     const base_url = 'http://'+server+':8100/api/CTM/' ;
     const regex_dict = {'PROBIO': /^(PB-P-)(.*)/, 'PSFF' : /^(PSFF-P-)(.*)/};
 
+
+
+    $("#sdidChecked").on("click", function() {
+        const chck_stat = $(this).is(':checked')
+        if(chck_stat){
+            $("#germline_sdid").prop("disabled", true);
+            $("#germline_sdid").val('');
+        }else{
+            $("#germline_sdid").prop("disabled", false);
+        }
+    })
+
     $(".custom-file-input").on("change", function() {
         const fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -82,12 +94,14 @@ $(document).ready(function(){
 
     $(".search-sample-submit").on('click', function(){
         const project_name = $("#project_name option:selected").val()
-        const ssid = $("#ssid").val()
+        const sdid = $("#sdid").val()
         const sid = $("#sid-1").val() + ',' + $("#sid-2").val()
-        const germline = $("#germline").val()
+        const germline_sid = $("#germline_sid").val() 
+        const germline_sdid = ($("#sdidChecked").is(':checked') == true ? sdid : $("#germline_sdid").val())
 
-        if(project_name != '' && ssid != '' && sid != '' && germline != ''){
-            sample_generate_barcode(base_url, project_name, ssid, sid, germline)
+
+        if(project_name != '' && sdid != '' && sid != '' && germline_sid != '' && germline_sdid != ''){
+            sample_generate_barcode(base_url, project_name, sdid, sid, germline_sid, germline_sdid)
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -200,11 +214,10 @@ $(document).ready(function(){
         });
     }
 
-    function sample_generate_barcode(base_url, project_name, ssid, sid, germline){
+    function sample_generate_barcode(base_url, project_name, sdid, sid, germline_sid, germline_sdid){
         $("#barcode-list").html('<div class="loader">Loading...</div>')
         $("#barcode-details").show()
-
-        const param = {'project_name': project_name, 'ssid': ssid, 'sid': sid, 'germline': germline}
+        const param = {'project_name': project_name, 'sdid': sdid, 'sid': sid, 'germline_sid': germline_sid, 'germline_sdid': germline_sdid}
         $.ajax({
             url: base_url+'sample_generate_barcode',
             type: 'POST',
