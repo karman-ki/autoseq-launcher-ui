@@ -93,15 +93,16 @@ $(document).ready(function(){
     })
 
     $(".search-sample-submit").on('click', function(){
-        const project_name = $("#project_name option:selected").val()
-        const sdid = $("#sdid").val()
-        const sid = $("#sid-1").val() + ',' + $("#sid-2").val()
-        const germline_sid = $("#germline_sid").val() 
-        const germline_sdid = ($("#sdidChecked").is(':checked') == true ? sdid : $("#germline_sdid").val())
-
+        const project_name = $("#project_name option:selected").val().trim()
+        const sdid = $("#sdid").val().trim()
+        const sid = $("#sid-1").val().trim() + ',' + $("#sid-2").val().trim()
+        const germline_sid = $("#germline_sid").val().trim()
+        const germline_sdid = ($("#sdidChecked").is(':checked') == true ? sdid : $("#germline_sdid").val().trim())
+        console.log(project_name,'|',sdid,'|',sid,'|',germline_sid,'|',germline_sdid)
 
         if(project_name != '' && sdid != '' && sid != '' && germline_sid != '' && germline_sdid != ''){
             sample_generate_barcode(base_url, project_name, sdid, sid, germline_sid, germline_sdid)
+            console.log(project_name, sdid, sid, germline_sid, germline_sdid)
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -196,7 +197,7 @@ $(document).ready(function(){
                     })
                     barcode_li +='</ol>'
                     barcode_li +='<p> '+
-                                '<button type="button" class="btn bg-info btn-md btn-flat col-2 float-right generate-config" data-id="'+barcoed_id+'">Generate Config file</button>'+
+                                '<button type="button" class="btn bg-success btn-md btn-flat col-1 float-right generate-config" data-id="'+barcoed_id+'">Create Analysis List</button>'+
                                 '</p>'
                     $("#barcode-list").html(barcode_li)
                     $("#barcode-details").show()
@@ -234,7 +235,7 @@ $(document).ready(function(){
                     })
                     barcode_li +='</ol>'
                     barcode_li +='<p> '+
-                                '<button type="button" class="btn bg-info btn-md btn-flat col-2 float-right generate-config" data-id="'+barcoed_id+'">Generate Config file</button>'+
+                                '<button type="button" class="btn bg-success btn-md col-1 float-right generate-config" data-id="'+barcoed_id+'">Create Analysis List</button>'+
                                 '</p>'
                     $("#barcode-list").html(barcode_li)
                     $("#barcode-details").show()

@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="col-2">
-                          <div class="form-group generate-btn">
+                          <div class="form-group upload-btn">
                             <button type="button" class="btn bg-gradient-info btn-lg form-submit">Submit</button>
                           </div>
                         </div>
