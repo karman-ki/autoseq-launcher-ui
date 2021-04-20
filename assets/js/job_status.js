@@ -5,7 +5,6 @@ $(document).ready(function(){
 
 	let currentURL = window.location.href.split('=');
 	current_arr= currentURL[1].split('&')
-	console.log(current_arr)
   	const job_id = current_arr[0];
 	const project_id = current_arr[1];
 
@@ -35,7 +34,6 @@ $(document).ready(function(){
 			async:false,
 			success: function(response){
 				server = response.server;
-				console.log(server)	
 			},
 			error: function(error){
 				toastr['error'](error);
@@ -115,11 +113,9 @@ $(document).ready(function(){
 			data: param,
 			dataType : 'json',
 			success: function(response){
-				console.log(response)
 				const data = response.data;
 				if(data.length > 0){
 					let out_log_content = '<ul class="list-group">'
-					console.log(data)
 					data_arr = data.split('\n')
 					$.each(data_arr, function(key, val){
 						val = val.replace('\n', '');

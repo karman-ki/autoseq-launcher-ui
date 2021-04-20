@@ -31,7 +31,6 @@ $(document).ready(function(){
             async:false,
             success: function(response){
                 server = response.server;
-                console.log(server)	
             },
             error: function(error){
                 toastr['error'](error);
@@ -271,7 +270,7 @@ $(document).ready(function(){
             success: function(response){
                 const data = response.data;
                 if(data.length > 0){
-                    console.log(data)
+                    const d_len = data.length
                 }else{
                     toastr['error'](response['error'])
                 }

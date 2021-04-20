@@ -89,7 +89,7 @@
                                 <div class="form-group">
                                     <label class="mandatory">SID1 <small>(barcode from tube 1)</small></label>
                                     <div class="mb-3">
-                                      <input type="text" class="form-control" id="sid-1" placeholder="0809123">
+                                      <input type="text" class="form-control" id="sid1" placeholder="0809123">
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                                 <div class="form-group">
                                     <label>SID2 <small>(barcode from tube 2)</small></label>
                                     <div class="mb-3">
-                                      <input type="text" class="form-control" id="sid-2" placeholder="0809123">
+                                      <input type="text" class="form-control" id="sid2" placeholder="0809123">
                                     </div>
                                 </div>
                             </div>
@@ -126,18 +126,22 @@
                         </div>
                         <div class="col-2">
                           <div class="form-group float-right">
-                            <button type="button" class="btn btn-sm btn-dark disabled"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-sm btn-success add-btn"><i class="fas fa-plus"></i></button>
                           </div>
                           <div class="form-check form-check-inline check-box-block">
-                            <input class="form-check-input" type="checkbox" id="sdidChecked">
+                            <input class="form-check-input sdidChecked" type="checkbox" id="sdidChecked">
                             <label class="form-check-label" for="sdidChecked">Both SDID Same</label>
                           </div>
                         </div>
-                        <div class="col">
+                    </div>
+                    <div class="input_fields_wrap">
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
                           <div class="form-group generate-btn">
                             <button type="button" class="btn bg-gradient-info btn-lg search-sample-submit">Submit</button>
                           </div>
-                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

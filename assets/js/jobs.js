@@ -30,7 +30,6 @@ $(document).ready(function(){
 			async:false,
 			success: function(response){
 				server = response.server;
-				console.log(server)	
 			},
 			error: function(error){
 				toastr['error'](error);
@@ -163,7 +162,6 @@ $(document).ready(function(){
 					let log_content = '<ul class="log-list">'
 					data_arr = data.split(/INFO|WARNING|DEBUG|ERROR|CRITICAL/)
 					$.each(data_arr, function(key, val){
-						console.log(val)
 						val = val.replace('\n', '');
 						if(val){
 							log_content += '<li class="log-items"><p>'+val+'</p></li>'
@@ -206,7 +204,6 @@ $(document).ready(function(){
 	// 		success: function(response){
 	// 			const json_data = response.data;
 	// 			if(json_data != []){
-	// 				console.log(json_data)
 	// 				const job_status = json_data['status'];
 	// 				const job_startTime = (json_data['starttime'] == '' || json_data['starttime'] == null ? '-' : json_data['starttime'].split('T')[0]);
 	// 				const job_endTime = (json_data['endtime'] == '' || json_data['endtime'] == null ? '-' : json_data['endtime'].split('T')[0]);

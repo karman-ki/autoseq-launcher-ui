@@ -7,6 +7,9 @@ $(document).ready(function(){
     $("#barcode-details").hide()
     $("#barcode-list").html("")
 
+    const max_fields      = 3;
+    const wrapper         = $(".input_fields_wrap"); 
+
     
     toastr.options = {
         "closeButton": true,
@@ -65,14 +68,15 @@ $(document).ready(function(){
     const regex_dict = {'PROBIO': /^(PB-P-)(.*)/, 'PSFF' : /^(PSFF-P-)(.*)/};
 
 
-
-    $("#sdidChecked").on("click", function() {
+    $(document).on("click", ".sdidChecked", function(e){
         const chck_stat = $(this).is(':checked')
+        const id_val = $(this).attr('id').split('_')[1]
+        const ids = (id_val == undefined ? '' : '_'+id_val)
         if(chck_stat){
-            $("#germline_sdid").prop("disabled", true);
-            $("#germline_sdid").val('');
+            $("#germline_sdid"+ids).prop("disabled", true);
+            $("#germline_sdid"+ids).val('');
         }else{
-            $("#germline_sdid").prop("disabled", false);
+            $("#germline_sdid"+ids).prop("disabled", false);
         }
     })
 
@@ -92,17 +96,138 @@ $(document).ready(function(){
         }
     })
 
-    $(".search-sample-submit").on('click', function(){
+    $(".add-btn").on('click', function(e){
+        e.preventDefault();
+        var total_fields = wrapper[0].childNodes.length;
+        if(total_fields < max_fields){
+
+            const divContent = '<div class="row">'+
+            '    <div class="col-6">'+
+            '        <p class="text-center font-weight-bold">CFDNA / Tissue</p>'+
+            '        <div class="row">'+
+            '        <div class="col">'+
+            '            <div class="form-group">'+
+            '                <label class="mandatory">SDID <small>(Patient ID)</small></label>'+
+            '                <div class="mb-3">'+
+            '                    <input type="text" class="form-control" id="sdid_'+total_fields+'" placeholder="P-0031289">'+
+            '                </div>'+
+            '            </div>'+
+            '        </div>'+
+            '        <div class="col">'+
+            '            <div class="form-group">'+
+            '                <label class="mandatory">SID1 <small>(barcode from tube 1)</small></label>'+
+            '                <div class="mb-3">'+
+            '                    <input type="text" class="form-control" id="sid1_'+total_fields+'" placeholder="0809123">'+
+            '                </div>'+
+            '            </div>'+
+            '        </div>'+
+            '        <div class="col">'+
+            '            <div class="form-group">'+
+            '                <label>SID2 <small>(barcode from tube 2)</small></label>'+
+            '                <div class="mb-3">'+
+            '                    <input type="text" class="form-control" id="sid2_'+total_fields+'" placeholder="0809123">'+
+            '                </div>'+
+            '            </div>'+
+            '        </div>'+
+            '        </div>'+
+            '    </div>'+
+            '    <div class="col-4 vertical-line">'+
+            '        <p class="text-center font-weight-bold">Germline</p>'+
+            '        <div class="row">'+
+            '            <div class="col">'+
+            '                <div class="form-group">'+
+            '                    <label class="mandatory">SDID <small>(Patient ID)</small></label>'+
+            '                    <div class="mb-3">'+
+            '                    <input type="text" class="form-control" id="germline_sdid_'+total_fields+'" placeholder="0809124">'+
+            '                    </div>'+
+            '                </div>'+
+            '            </div>'+
+            '            <div class="col">'+
+            '                <div class="form-group">'+
+            '                    <label class="mandatory">SID <small>(barcode from tube)</small></label>'+
+            '                    <div class="mb-3">'+
+            '                    <input type="text" class="form-control" id="germline_sid_'+total_fields+'" placeholder="0809124">'+
+            '                    </div>'+
+            '                </div>'+
+            '            </div>'+
+            '        </div>'+
+            '    </div>'+
+            '    <div class="col-2">'+
+            '        <div class="form-group float-right">'+
+            '        <button type="button" class="btn btn-sm btn-danger remove-btn"><i class="fas fa-minus"></i></button>'+
+            '        </div>'+
+            '        <div class="form-check form-check-inline check-box-block">'+
+            '        <input class="form-check-input sdidChecked" type="checkbox" id="sdidChecked_'+total_fields+'">'+
+            '        <label class="form-check-label" for="sdidChecked_'+total_fields+'">Both SDID Same</label>'+
+            '        </div>'+
+            '    </div>'+
+            '</div>';
+	
+
+            $(wrapper).append(divContent);
+        }
+    })
+
+    $(document).on("click", ".remove-btn", function(e){
+        e.preventDefault();
+        var total_fields = wrapper[0].childNodes.length;
+        if(total_fields > 1){
+            wrapper[0].childNodes[total_fields-1].remove();
+        }
+    })
+
+    $(document).on("click", ".search-sample-submit", function(){
+        let sample_list = []
         const project_name = $("#project_name option:selected").val().trim()
         const sdid = $("#sdid").val().trim()
-        const sid = $("#sid-1").val().trim() + ',' + $("#sid-2").val().trim()
+        const sid = $("#sid1").val().trim() + ',' + $("#sid2").val().trim()
         const germline_sid = $("#germline_sid").val().trim()
         const germline_sdid = ($("#sdidChecked").is(':checked') == true ? sdid : $("#germline_sdid").val().trim())
-        console.log(project_name,'|',sdid,'|',sid,'|',germline_sid,'|',germline_sdid)
 
-        if(project_name != '' && sdid != '' && sid != '' && germline_sid != '' && germline_sdid != ''){
-            sample_generate_barcode(base_url, project_name, sdid, sid, germline_sid, germline_sdid)
-            console.log(project_name, sdid, sid, germline_sid, germline_sdid)
+        const normal_val = project_name+'-'+germline_sdid+'-N-'+germline_sid+'-*'
+        sample_list.push(normal_val)
+
+        let cfdna_val = ''
+
+        $.each(sid.split(','), function(key, val){
+            if(val){
+                cfdna_val = project_name+'-'+sdid+'-CFDNA-'+val+'-*'
+                sample_list.push(cfdna_val)
+            }
+        })
+
+        let validate_boolean = false
+
+        const counter = wrapper[0].childNodes.length;
+
+        if(counter > 1){
+            for(i=1; i<counter; i++){
+                const sdid_1 = $("#sdid_"+i).val()
+                const sid_1 = $("#sid1_"+i).val() + ',' + $("#sid2_"+i).val()
+                const germline_sid_1 = $("#germline_sid_"+i).val()
+                const germline_sdid_1 = ($("#sdidChecked_"+i).is(':checked') == true ? sdid_1 : $("#germline_sdid_"+i).val())
+                
+                if(sdid_1 != '' && sid_1 != '' && germline_sid_1 != '' && germline_sdid_1 != ''){
+                    validate_boolean = true
+                    const normal_val = project_name+'-'+germline_sdid_1+'-N-'+germline_sid_1+'-*'
+                    sample_list.push(normal_val)
+
+                    $.each(sid_1.split(','), function(key, val){
+                        if(val){
+                            cfdna_val = project_name+'-'+sdid_1+'-CFDNA-'+val+'-*'
+                            sample_list.push(cfdna_val)
+                        }
+                    })
+                }else{
+                    break
+                }
+           }
+        }else{
+            validate_boolean = true
+        }
+        
+        if(project_name != '' && sdid != '' && sid != '' && germline_sid != '' && germline_sdid != '' && validate_boolean && sample_list){
+            sample_generate_barcode(base_url, project_name, sample_list.join())
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -171,7 +296,6 @@ $(document).ready(function(){
                 sample_arr += excelRows[i]['__EMPTY'] +','
             }
         }
-        console.log(sample_arr)
         // generate_barcode(base_url,project_name, '',sample_arr.replace(/,\s*$/, ""), file_name)
         uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name)
     }
@@ -215,10 +339,10 @@ $(document).ready(function(){
         });
     }
 
-    function sample_generate_barcode(base_url, project_name, sdid, sid, germline_sid, germline_sdid){
+    function sample_generate_barcode(base_url, project_name, sample_list){
         $("#barcode-list").html('<div class="loader">Loading...</div>')
         $("#barcode-details").show()
-        const param = {'project_name': project_name, 'sdid': sdid, 'sid': sid, 'germline_sid': germline_sid, 'germline_sdid': germline_sdid}
+        const param = {'project_name': project_name, 'samples': sample_list}
         $.ajax({
             url: base_url+'sample_generate_barcode',
             type: 'POST',

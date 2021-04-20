@@ -106,9 +106,9 @@
             <div class="col-sm-8">
             <select class="custom-select" id="machine_type">
               <option value=''>Choose...</option>
+              <option value="gryfindor">Gryfindor</option>
               <option value="anchorage">Anchorage</option>
               <option value="scalar">Scalar</option>
-              <option value="vector">Vector</option>
             </select>
             </div>
           </div>
