@@ -149,7 +149,7 @@ $(document).ready(function(){
 			dataType : 'json',
 			success: function(response){
 				const json_data = response.data;
-				if(json_data.length > 0){
+				if(!$.isEmptyObject(json_data)){
 					const job_status = json_data['status'];
 					const job_startTime = (json_data['starttime'] == '' || json_data['starttime'] == null ? '-' : json_data['starttime'].split('T')[0]);
 					const job_endTime = (json_data['endtime'] == '' || json_data['endtime'] == null ? '-' : json_data['endtime'].split('T')[0]);
