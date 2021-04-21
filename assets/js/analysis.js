@@ -84,7 +84,7 @@ $(document).ready(function(){
                     }else if(project_status == '-1'){
                         button_info = '<span class="btn btn-success btn-sm mr-1">Completed</span>';
                     }
-                    const percentage = '50'
+                    const percentage = (value['progress_bar'] == 'None' ? '1' : value['progress_bar'] )
 
                     project_list_table += '<tr>'+
                                 '  <td>'+value['project_name']+'</td>'+
@@ -124,7 +124,9 @@ $(document).ready(function(){
                     //     { "width": "5%", "targets": 3 },
                     //     { "width": "5%", "targets": 4 },
                     //     { "width": "10%", "targets": 5 },
-                    //     { "width": "10%", "targets": 6 }
+                    //     { "width": "10%", "targets": 6 },
+                    //     { "width": "5%", "targets": 7 },
+                    //     { "width": "5%", "targets": 8 }
                     // ],
                     "language": {
                         "emptyTable": "No Project information available",
