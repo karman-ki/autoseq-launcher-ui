@@ -216,3 +216,14 @@ a.btn.disabled {
 .form-control {
   font-size: 14px;
 }
+
+.job_flow_status {
+  list-style: none;
+  padding: 0px;
+  column-count: 3;
+  margin: 0px;
+}
+
+.job_flow_status li {
+  display: grid;
+}

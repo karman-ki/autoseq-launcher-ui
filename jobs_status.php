@@ -50,6 +50,26 @@
 							<div class="col-sm-2">
 								<div class="info-box bg-light">
 									<div class="info-box-content">
+										<ul class="job_flow_status">
+											<li>
+												<span class="info-box-text text-center text-success">Completed</span> 
+												<span class="info-box-number text-center text-muted" id="complete"></span>
+											</li>
+											<li>
+												<span class="info-box-text text-center text-danger">Cancelled</span>  
+												<span class="info-box-number text-center text-muted" id="cancel"></span>
+											</li>
+											<li> 
+												<span class="info-box-text text-center text-danger">Failed</span>  
+												<span class="info-box-number text-center text-muted" id="fail"></span>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="info-box bg-light">
+									<div class="info-box-content">
 									<span class="info-box-text text-center text-muted">Start Time</span>
 									<span class="info-box-number text-center text-muted" id="startTime"></span>
 									</div>
@@ -63,6 +83,7 @@
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div><!-- /.col -->
 				</div><!-- /.row -->

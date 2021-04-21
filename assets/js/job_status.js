@@ -65,6 +65,9 @@ $(document).ready(function(){
 	$("#startTime").html('-')
 	$("#endTime").html('-')
 	$("#noJobs").html('-')
+	$("#complete").html('-')
+	$("#cancel").html('-')
+	$("#fail").html('-')
 
 	function initDatatable(){
 		$('#tb_job_status_list').DataTable({
@@ -160,11 +163,18 @@ $(document).ready(function(){
 					$("#startTime").html(job_startTime)
 					$("#endTime").html(job_endTime)
 					$("#noJobs").html(job_list.length)
-
+					let complete_count = 0;
+					let cancel_count = 0;
+					let fail_count = 0
 
 					let job_status_list_table = ''
 					$.each(job_list, function(key, value){
 						let status_class = (value['status'] == "COMPLETED" ? 'text-success' : ( value['status'] == "CANCELLED" || value['status'] == "FAILED") ? 'text-danger' : 'text-info')
+						complete_count = (value['status'] == "COMPLETED" ? complete_count+=1 : complete_count)
+						cancel_count = (value['status'] == "CANCELLED" ? cancel_count+=1 : cancel_count)
+						fail_count = (value['status'] == "FAILED" ? fail_count+=1 : fail_count)
+
+
 						job_status_list_table += '<tr>'+
 								'  <td>'+value['jobid']+'</td>'+
 								'  <td>'+value['jobname']+'</td>'+
@@ -176,6 +186,10 @@ $(document).ready(function(){
 					})
 					$("#tb_job_status_list tbody").html(job_status_list_table);
 					initDatatable()
+
+					$("#complete").html(complete_count)
+					$("#cancel").html(cancel_count)
+					$("#fail").html(fail_count)
 					
 					$('#viewJobModal').modal({
 						keyboard: false,
