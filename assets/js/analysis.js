@@ -102,7 +102,8 @@ $(document).ready(function(){
                                 '  <td>'+
                                         button_info+
                                         // '<a class="btn btn-primary btn-sm btnView mr-1"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-folder pr-1"></i>View</a>'+
-                                        '<a class="btn btn-dark btn-sm btnEdit '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a>'+
+                                        '<a class="btn btn-dark btn-sm btnEdit mr-1 '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a>'+
+                                        // '<a class="btn btn-danger btn-sm del-analysis mr-1"  data-id="'+value['p_id']+'" href="#">Delete</a>'+
                                 '</td>'+
                                 '</tr>';
                 })
@@ -307,5 +308,34 @@ $(document).ready(function(){
             }
         }); 
     }
+
+    $(document).on("click", ".del-analysis", function(){
+		const project_id = $(this).attr('data-id');
+		delAnalysisInfo(project_id)
+	})
+
+	function delAnalysisInfo(project_id){
+		const param = {'project_id': project_id}
+        $.ajax({
+            url: base_url+'del_analysis_info',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                if(response.data){
+                    toastr['success'](response['data']);
+                    $('#tb_project_list').DataTable().destroy();
+                    getProjectList()
+                }else{
+                    toastr['error'](response['error'])
+                }
+
+            },
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
+            }
+        }); 
+	}
 
 });

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CTM | Home</title>
+  <title>Autoseq-Launcher | Home</title>
   <?php $path = getcwd()."/layout/"; include($path."header_link.php"); ?>
 </head>
 <body class="hold-transition layout-top-nav">

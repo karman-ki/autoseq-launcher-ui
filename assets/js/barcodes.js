@@ -80,6 +80,7 @@ $(document).ready(function(){
 								'  <td>'+value['barcode_path']+'</td>'+
 								'  <td>'+value['config_path']+'</td>'+
 								'  <td>'+value['create_time']+'</td>'+
+								// '  <td><button type="button" class="btn bg-danger btn-sm del-barcode mr-1" data-id="'+value['b_id']+'">Delete</button></td>'+
 								'</tr>';
 				})
 				$("#tb_barcode_list tbody").html(barcode_list_table);
@@ -121,4 +122,34 @@ $(document).ready(function(){
 			}
 		});   
 	}
+
+	$(document).on("click", ".del-barcode", function(){
+		const b_id = $(this).attr('data-id');
+		delBarcodeInfo(b_id)
+	})
+
+	function delBarcodeInfo(b_id){
+		const param = {'barcode_id': b_id}
+        $.ajax({
+            url: base_url+'del_barcode_info',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                if(response.data){
+                    toastr['success'](response['data']);
+                    $('#tb_barcode_list').DataTable().destroy();
+	    			getBarcodeList()
+                }else{
+                    toastr['error'](response['error'])
+                }
+
+            },
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
+            }
+        }); 
+	}
+
 });

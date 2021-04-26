@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>CTM | Barcodes</title>
+	<title>Autoseq-Launcher | Barcodes</title>
 	<?php $path = getcwd()."/layout/"; include($path."header_link.php"); ?>
 
 </head>
@@ -45,6 +45,7 @@
 												<th>Barcode Path</th>
 												<th>Config Path</th>
 												<th>Create Time</th>
+												<!-- <th>Action</th> -->
 											</tr>
 										</thead>
 										<tfoot>
@@ -55,6 +56,7 @@
 												<th>Barcode Path</th>
 												<th>Config Path</th>
 												<th>Create Time</th>
+												<!-- <th>Action</th> -->
 											</tr>
 										</tfoot>
 										<tbody>

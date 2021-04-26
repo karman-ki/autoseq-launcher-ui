@@ -93,6 +93,7 @@ $(document).ready(function(){
 								'  <td>'+
 									'<a class="btn btn-outline-info btn-sm btnLogView m-1"  data-id="'+value['job_id']+'" href="#"><i class="fas fa-file pr-1"></i>Logs</a>'+
 									'<a class="btn btn-outline-primary btn-sm"  href="jobs_status.php?id='+value['job_id']+'&'+value['sample_id']+'"><i class="fas fa-tasks pr-1"></i>Flow & Status</a>'+
+									// '<a class="btn btn-outline-danger btn-sm del-job" data-id="'+value['job_id']+'" href="#">Delete</a>'+
 								'</td>'+
 								'</tr>';
 				})
@@ -184,96 +185,33 @@ $(document).ready(function(){
 		}); 
 	}
 
-	// $(document).on("click", ".btnJobStatus", function(){
-	// 	const job_id = $(this).attr('data-id');
-	// 	getJobStatusInfo(job_id)
-	// })
+	$(document).on("click", ".del-job", function(){
+		const job_id = $(this).attr('data-id');
+		delJobInfo(job_id)
+	})
 
-	// $('#tb_job_status_list tfoot th').each( function () {
-    //     var title = $(this).text();
-    //     $(this).html( '<input type="text" class="input-sm" placeholder="'+title+'" />' );
-    //  });
+	function delJobInfo(job_id){
+		const param = {'job_id': job_id}
+        $.ajax({
+            url: base_url+'del_job_info',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+                if(response.data){
+                    toastr['success'](response['data']);
+                    $('#tb_job_list').DataTable().destroy();
+	    			getJobList()
+                }else{
+                    toastr['error'](response['error'])
+                }
 
-	// function getJobStatusInfo(job_id){
-	// 	const param = {'job_id': job_id}
-	// 	$.ajax({
-	// 		url: base_url+'get_job_status',
-	// 		type: 'POST',
-	// 		data: param,
-	// 		dataType : 'json',
-	// 		success: function(response){
-	// 			const json_data = response.data;
-	// 			if(json_data != []){
-	// 				const job_status = json_data['status'];
-	// 				const job_startTime = (json_data['starttime'] == '' || json_data['starttime'] == null ? '-' : json_data['starttime'].split('T')[0]);
-	// 				const job_endTime = (json_data['endtime'] == '' || json_data['endtime'] == null ? '-' : json_data['endtime'].split('T')[0]);
-	// 				const job_list = json_data['jobs']
-
-	// 				$("#status").html(job_status)
-	// 				$("#startTime").html(job_startTime)
-	// 				$("#endTime").html(job_endTime)
-	// 				$("#noJobs").html(job_list.length)
-
-
-	// 				let job_status_list_table = ''
-	// 				$.each(job_list, function(key, value){
-	// 					let status_class = (value['status'] == "COMPLETED" ? 'text-success' : ( value['status'] == "CANCELLED" || value['status'] == "FAILED") ? 'text-danger' : 'text-info')
-	// 					job_status_list_table += '<tr>'+
-	// 							'  <td>'+value['jobid']+'</td>'+
-	// 							'  <td>'+value['jobname']+'</td>'+
-	// 							'  <td><span class="font-weight-bold '+status_class+'">'+value['status']+'</span></td>'+
-	// 							'  <td>'+value['starttime'].split('T')[0]+'</td>'+
-	// 							'  <td>'+value['endtime'].split('T')[0]+'</td>'+
-	// 							'</tr>';
-	// 				})
-	// 				$("#tb_job_status_list tbody").html(job_status_list_table);
-	// 				$('#tb_job_status_list').DataTable({
-	// 					'processing': true,
-	// 					"paging": true,
-	// 					"lengthChange": true,
-	// 					"searching": true,
-	// 					"ordering": true,
-	// 					"info": true,
-	// 					"autoWidth": false,
-	// 					"responsive": false,
-	// 					"order": [[0, "asc" ]],
-	// 					"language": {
-	// 						"emptyTable": "No Job Status information available",
-	// 						'loadingRecords': '&nbsp;',
-	// 						'processing': '<div class="loader">Loading...</div>'
-
-	// 					},
-	// 					initComplete: function () {
-	// 						// Apply the search
-	// 						this.api().columns().every( function () {
-	// 							var that = this;
-				
-	// 							$( 'input', this.footer() ).on( 'keyup change clear', function () {
-	// 								if ( that.search() !== this.value ) {
-	// 									that
-	// 										.search( this.value )
-	// 										.draw();
-	// 								}
-	// 							} );
-	// 						} );
-	// 					}
-	// 				});
-
-	// 				$('#viewJobModal').modal({
-	// 					keyboard: false,
-	// 					backdrop : 'static'
-	// 				})
-	// 			}else{
-	// 				toastr['error'](response['error']);
-	// 			}
-				
-	// 		},
-	// 		error: function(response, error){
-	// 			const err_text = response.responseJSON
-	// 			toastr['error'](err_text['error']);
-	// 		}
-	// 	}); 
-	// }
-
+            },
+            error: function(response, error){
+                const err_text = response.responseJSON
+                toastr['error'](err_text['error']);
+            }
+        }); 
+	}
 	
 });

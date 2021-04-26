@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>CTM | Jobs</title>
+	<title>Autoseq-Launcher | Jobs</title>
 	<?php $path = getcwd()."/layout/"; include($path."header_link.php"); ?>
 
 </head>
