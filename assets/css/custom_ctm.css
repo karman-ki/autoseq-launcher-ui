@@ -220,7 +220,7 @@ a.btn.disabled {
 .job_flow_status {
   list-style: none;
   padding: 0px;
-  column-count: 3;
+  column-count: 5;
   margin: 0px;
 }
 

@@ -165,14 +165,19 @@ $(document).ready(function(){
 					$("#noJobs").html(job_list.length)
 					let complete_count = 0;
 					let cancel_count = 0;
-					let fail_count = 0
+					let fail_count = 0;
+					let run_count = 0;
+					let pending_count = 0;
 
 					let job_status_list_table = ''
 					$.each(job_list, function(key, value){
-						let status_class = (value['status'] == "COMPLETED" ? 'text-success' : ( value['status'] == "CANCELLED" || value['status'] == "FAILED") ? 'text-danger' : 'text-info')
+						let status_class = (value['status'] == "COMPLETED" ? 'text-success' : ( value['status'] == "CANCELLED" || value['status'] == "FAILED") ? 'text-danger' : ( value['status'] == "PENDING") ? 'text-warning' : 'text-info')
 						complete_count = (value['status'] == "COMPLETED" ? complete_count+=1 : complete_count)
 						cancel_count = (value['status'] == "CANCELLED" ? cancel_count+=1 : cancel_count)
 						fail_count = (value['status'] == "FAILED" ? fail_count+=1 : fail_count)
+						pending_count = (value['status'] == "PENDING" ? pending_count+=1 : pending_count)
+						run_count = (value['status'] == "RUNNING" ? run_count+=1 : run_count)
+
 
 
 						job_status_list_table += '<tr>'+
@@ -180,8 +185,8 @@ $(document).ready(function(){
 								'  <td>'+value['jobname']+'</td>'+
 								'  <td><span class="font-weight-bold '+status_class+'">'+value['status']+'</span></td>'+
 								'  <td><a href="#" class="view-out-path">'+value['log']+'</a></td>'+
-								'  <td>'+value['starttime'].split('T')[0]+'</td>'+
-								'  <td>'+value['endtime'].split('T')[0]+'</td>'+
+								'  <td>'+value['starttime']+'</td>'+
+								'  <td>'+value['endtime']+'</td>'+
 								'</tr>';
 					})
 					$("#tb_job_status_list tbody").html(job_status_list_table);
@@ -190,6 +195,8 @@ $(document).ready(function(){
 					$("#complete").html(complete_count)
 					$("#cancel").html(cancel_count)
 					$("#fail").html(fail_count)
+					$("#running").html(run_count)
+					$("#pending").html(pending_count)
 					
 					$('#viewJobModal').modal({
 						keyboard: false,

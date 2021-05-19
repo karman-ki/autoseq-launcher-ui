@@ -39,7 +39,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-1">
 								<div class="info-box bg-light">
 									<div class="info-box-content">
 									<span class="info-box-text text-center text-muted">No of Jobs</span>
@@ -47,13 +47,21 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-5">
 								<div class="info-box bg-light">
 									<div class="info-box-content">
 										<ul class="job_flow_status">
 											<li>
 												<span class="info-box-text text-center text-success">Completed</span> 
 												<span class="info-box-number text-center text-muted" id="complete"></span>
+											</li>
+											<li>
+												<span class="info-box-text text-center text-info">Running</span> 
+												<span class="info-box-number text-center text-muted" id="running"></span>
+											</li>
+											<li>
+												<span class="info-box-text text-center text-warning">Pending</span> 
+												<span class="info-box-number text-center text-muted" id="pending"></span>
 											</li>
 											<li>
 												<span class="info-box-text text-center text-danger">Cancelled</span>  
@@ -67,7 +75,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-1">
 								<div class="info-box bg-light">
 									<div class="info-box-content">
 									<span class="info-box-text text-center text-muted">Start Time</span>
@@ -75,7 +83,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-1">
 								<div class="info-box bg-light">
 									<div class="info-box-content">
 									<span class="info-box-text text-center text-muted">End Time</span>
