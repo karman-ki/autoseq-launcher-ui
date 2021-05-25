@@ -45,8 +45,7 @@
                             <th>Sample ID</th>
                             <th>CFDNA/T Sample</th>
                             <th>N sample</th>
-                            <th>Cores</th>
-                            <th>Machine</th>
+                            <th>Cores / Machine</th>
                             <th>Created</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -58,8 +57,7 @@
                             <th>Sample ID</th>
                             <th>CFDNA/T Sample</th>
                             <th>N sample</th>
-                            <th>Cores</th>
-                            <th>Machine</th>                            
+                            <th>Cores / Machine</th>
                             <th>Created</th>
                             <th>Status</th>
                             <th>Action</th>

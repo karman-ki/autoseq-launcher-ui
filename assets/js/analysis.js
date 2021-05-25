@@ -75,14 +75,14 @@ $(document).ready(function(){
                     let button_info = ''
                     let edit_btn_enable = ''
                     if(project_status == '0'){
-                        button_info = '<button type="button" class="btn bg-info btn-sm start-pipeline mr-1" data-id="'+value['p_id']+'">Start</button>';
+                        button_info = '<li><button type="button" class="btn bg-info btn-sm start-pipeline " data-id="'+value['p_id']+'">Start</button></li>';
                     }else if(project_status == '1'){
                         edit_btn_enable = 'disabled'
-                        button_info = '<button type="button" class="btn bg-primary btn-sm mr-1">Running</button> <button type="button" class="btn bg-danger btn-sm stop-pipeline mr-1" data-id="'+value['p_id']+'">Stop</button>';
+                        button_info = '<li><button type="button" class="btn bg-primary btn-sm ">Running</button></li><li><button type="button" class="btn bg-danger btn-sm stop-pipeline " data-id="'+value['p_id']+'">Stop</button></li>';
                     }else if(project_status == '2'){
-                        button_info = '<span class="btn btn-danger btn-sm mr-1">Failed</span> <button type="button" class="btn bg-secondary btn-sm start-pipeline mr-1" data-id="'+value['p_id']+'">Re-Start</button>';
+                        button_info = '<li><span class="btn btn-danger btn-sm">Failed</span></li><li><button type="button" class="btn bg-secondary btn-sm start-pipeline " data-id="'+value['p_id']+'">Re-Start</button></li>';
                     }else if(project_status == '-1'){
-                        button_info = '<span class="btn btn-success btn-sm mr-1">Completed</span>';
+                        button_info = '<li><span class="btn btn-success btn-sm">Completed</span></li>';
                     }
                     const percentage = (value['progress_bar'] == 'None' ? '1' : value['progress_bar'] )
 
@@ -91,8 +91,7 @@ $(document).ready(function(){
                                 '  <td>'+value['sample_id']+'</td>'+
                                 '  <td>'+value['cfdna']+'</td>'+
                                 '  <td>'+value['normal']+'</td>'+
-                                '  <td>'+value['cores']+'</td>'+
-                                '  <td>'+value['machine_type']+'</td>'+
+                                '  <td>'+value['cores']+' / '+value['machine_type']+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+
                                 '       <div class="progress">'+
@@ -100,35 +99,34 @@ $(document).ready(function(){
                                 '       </div>'+
                                 '  </td>'+
                                 '  <td>'+
+                                '   <ul class="analysis-status-ul">'+
                                         button_info+
-                                        // '<a class="btn btn-primary btn-sm btnView mr-1"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-folder pr-1"></i>View</a>'+
-                                        '<a class="btn btn-dark btn-sm btnEdit mr-1 '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a>'+
-                                        // '<a class="btn btn-danger btn-sm del-analysis mr-1"  data-id="'+value['p_id']+'" href="#">Delete</a>'+
+                                        '<li><a class="btn btn-dark btn-sm btnEdit '+edit_btn_enable+'"  data-id="'+value['p_id']+'" href="#"><i class="fas fa-pencil-alt pr-1"></i>Edit</a></li>'+
+                                '   </ul>'
                                 '</td>'+
                                 '</tr>';
                 })
                 $("#tb_project_list tbody").html(project_list_table);
                 $('#tb_project_list').DataTable({
-                    'processing': true,
                     "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": false,
+					"lengthChange": true,
+					"searching": true,
+					"ordering": true,
+					"info": true,
+					"autoWidth": true,
+					"responsive": true,
                     "order": [[6, "desc" ]],
-                    // "columnDefs": [
-                    //     { "width": "5%", "targets": 0 },
-                    //     { "width": "5%", "targets": 1 },
-                    //     { "width": "50%", "targets": 2 },
-                    //     { "width": "5%", "targets": 3 },
-                    //     { "width": "5%", "targets": 4 },
-                    //     { "width": "10%", "targets": 5 },
-                    //     { "width": "10%", "targets": 6 },
-                    //     { "width": "5%", "targets": 7 },
-                    //     { "width": "5%", "targets": 8 }
-                    // ],
+                    "columnDefs": [
+                        { "width": "5%", "targets": 0 },
+                        { "width": "5%", "targets": 1 },
+                        { "width": "50%", "targets": 2 },
+                        { "width": "5%", "targets": 3 },
+                        { "width": "5%", "targets": 4 },
+                        { "width": "10%", "targets": 5 },
+                        { "width": "10%", "targets": 6 },
+                        { "width": "5%", "targets": 7 },
+                        { "width": "5%", "targets": 8 }
+                    ],
                     "language": {
                         "emptyTable": "No Project information available",
                         'processing': '<div class="loader">Loading...</div>'

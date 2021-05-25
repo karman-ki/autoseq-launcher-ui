@@ -227,3 +227,15 @@ a.btn.disabled {
 .job_flow_status li {
   display: grid;
 }
+
+.analysis-status-ul{
+  list-style: none;
+  padding:0px;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+/* .analysis-status-ul li {
+  display: inline;
+  margin:5px;
+} */
