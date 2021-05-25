@@ -108,6 +108,7 @@ $(document).ready(function(){
                 })
                 $("#tb_project_list tbody").html(project_list_table);
                 $('#tb_project_list').DataTable({
+                    "processing": true,
                     "paging": true,
 					"lengthChange": true,
 					"searching": true,
@@ -115,7 +116,7 @@ $(document).ready(function(){
 					"info": true,
 					"autoWidth": true,
 					"responsive": true,
-                    "order": [[6, "desc" ]],
+                    "order": [[5, "desc" ]],
                     "columnDefs": [
                         { "width": "5%", "targets": 0 },
                         { "width": "5%", "targets": 1 },
@@ -124,11 +125,11 @@ $(document).ready(function(){
                         { "width": "5%", "targets": 4 },
                         { "width": "10%", "targets": 5 },
                         { "width": "10%", "targets": 6 },
-                        { "width": "5%", "targets": 7 },
-                        { "width": "5%", "targets": 8 }
+                        { "width": "10%", "targets": 7 },
                     ],
                     "language": {
                         "emptyTable": "No Project information available",
+                        'loadingRecords': '&nbsp;',
                         'processing': '<div class="loader">Loading...</div>'
                     },
                     initComplete: function () {
