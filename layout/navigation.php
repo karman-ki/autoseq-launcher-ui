@@ -1,5 +1,5 @@
  <!-- Navbar -->
- <nav class="main-header navbar navbar-expand-md navbar-dark bg-navbar">
+ <nav class="main-header navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
       <a href="index.php" class="navbar-brand">
         <img src="assets/img/Cartoon_space_rocket.png" alt="AdminLTE Logo" class="brand-image">

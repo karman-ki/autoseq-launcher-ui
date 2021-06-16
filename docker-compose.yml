@@ -2,7 +2,7 @@ version: "3.3"
 
 services: 
   web:
-    container_name: autoseq-launcher-ui
+    container_name: autoseq_launcher_ui
     image: nginx:latest
     ports:
       - "9100:9100"
@@ -13,7 +13,7 @@ services:
       - code-network
 
   php:
-    container_name: autoseq-launcher-ui-php
+    container_name: autoseq_launcher_ui_php
     image: php:fpm
     volumes:
         - ./:/autoseq-launcher-ui
