@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <a href="index.php" class="navbar-brand">
         <img src="assets/img/Cartoon_space_rocket.png" alt="AdminLTE Logo" class="brand-image">
-        <span class="brand-text font-weight-bold">Autoseq Launcher</span>
+        <span class="brand-text font-weight-bold">Autoseq-Launcher</span>
       </a>
 
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
