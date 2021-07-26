@@ -144,25 +144,35 @@
 											</div>
 										</div> -->
 										<div class="row">
-											<div class="col-5">
+											<div class="col-6">
+												<p class="text-center font-weight-bold">CFDNA / Tissue</p>
 												<div class="row">
 													<div class="col">
 														<div class="form-group">
-															<label class="mandatory">CFDNA / Tissue <small>(sample name)</small></label>
+															<label class="mandatory">SID1 <small>(sample name)</small></label>
 															<div class="mb-3">
-																<input type="text" class="form-control" id="cfdna_sample_name" placeholder="*-P-*-CFDNA-*-KH*-C3*">
+																<input type="text" class="form-control" id="cfdna_sid1" placeholder="*-P-*-CFDNA-*-KH*-C3*">
+															</div>
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label class="">SID2 <small>(sample name)</small></label>
+															<div class="mb-3">
+																<input type="text" class="form-control" id="cfdna_sid2" placeholder="*-P-*-CFDNA-*-KH*-C3*">
 															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div class="col-5 vertical-line">
+											<div class="col-4 vertical-line">
+												<p class="text-center font-weight-bold">Germline</p>
 												<div class="row">
 													<div class="col">
 														<div class="form-group">
-															<label class="mandatory">Germline <small>(sample name)</small></label>
+															<label class="mandatory">SID <small>(sample name)</small></label>
 															<div class="mb-3">
-																<input type="text" class="form-control" id="germline_sample_name" placeholder="*-P-*-N-*-KH*-C3*">
+																<input type="text" class="form-control" id="germline_sid" placeholder="*-P-*-N-*-KH*-C3*">
 															</div>
 														</div>
 													</div>

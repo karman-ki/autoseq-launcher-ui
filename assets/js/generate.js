@@ -162,28 +162,35 @@ $(document).ready(function(){
             // '        </div>'+
             // '    </div>'+
             // '</div>';
-            let label_count = total_fields +1;
 
-            const divContent = '<div class="row">'+
-            '    <div class="col-5">'+
+            const divContent = '<div class="row add-new-row" id="add_'+total_fields+'" d-id='+total_fields+'>'+
+            '    <div class="col-6">'+
             '        <div class="row">'+
             '           <div class="col">'+
             '               <div class="form-group">'+
-            '                   <label class="mandatory">CFDNA / Tissue '+label_count+' <small>(sample name)</small></label>'+
+            '                   <label class="mandatory">SID1 <small>(sample name)</small></label>'+
             '                   <div class="mb-3">'+
-            '                       <input type="text" class="form-control" id="cfdna_sample_name_'+total_fields+'" placeholder="*-P-*-CFDNA-*-KH*-C3*">'+
+            '                       <input type="text" class="form-control" id="cfdna_sid1_'+total_fields+'" placeholder="*-P-*-CFDNA-*-KH*-C3*">'+
             '                   </div>'+
             '               </div>'+
             '           </div>'+
-            '        </div>'+
+            '           <div class="col">'+
+            '               <div class="form-group">'+
+            '                   <label>SID2 <small>(sample name)</small></label>'+
+            '                   <div class="mb-3">'+
+            '                       <input type="text" class="form-control" id="cfdna_sid2_'+total_fields+'" placeholder="*-P-*-CFDNA-*-KH*-C3*">'+
+            '                    </div>'+
+            '                </div>'+
+            '               </div>'+
+            '          </div>'+
             '    </div>'+
-            '    <div class="col-5 vertical-line">'+
+            '    <div class="col-4 vertical-line">'+
             '        <div class="row">'+
             '            <div class="col">'+
             '                <div class="form-group">'+
-            '                    <label class="mandatory">Germline '+label_count+' <small>(sample name)</small></label>'+
+            '                    <label class="mandatory">SID <small>(sample name)</small></label>'+
             '                    <div class="mb-3">'+
-            '                    <input type="text" class="form-control" id="germline_sample_name_'+total_fields+'" placeholder="*-P-*-N-*-KH*-C3*">'+
+            '                    <input type="text" class="form-control" id="germline_sid_'+total_fields+'" placeholder="*-P-*-N-*-KH*-C3*">'+
             '                    </div>'+
             '                </div>'+
             '            </div>'+
@@ -191,7 +198,7 @@ $(document).ready(function(){
             '    </div>'+
             '    <div class="col-2">'+
             '        <div class="form-group float-right">'+
-            '        <button type="button" class="btn btn-sm btn-danger remove-btn"><i class="fas fa-minus"></i></button>'+
+            '        <button type="button" class="btn btn-sm btn-danger remove-btn" data-id='+total_fields+'><i class="fas fa-minus"></i></button>'+
             '        </div>'+
             '    </div>'+
             '</div>';
@@ -201,12 +208,10 @@ $(document).ready(function(){
         }
     })
 
-    $(document).on("click", ".remove-btn", function(e){
-        e.preventDefault();
-        var total_fields = wrapper[0].childNodes.length;
-        if(total_fields > 1){
-            wrapper[0].childNodes[total_fields-1].remove();
-        }
+    $(document).on("click", ".remove-btn", function(){
+        const total_fields = $(this).attr('data-id');
+        $("#add_"+total_fields).remove();
+
     })
 
     // $(document).on("click", ".search-sample-submit", function(){
@@ -266,42 +271,53 @@ $(document).ready(function(){
     //     }
     // })
 
+
     $(document).on("click", ".search-sample-submit", function(){
         let sample_list = []
         const project_name = $("#project_name option:selected").val().trim()
-        const cfdna_sample_name = $("#cfdna_sample_name").val().trim()
-        const germline_sample_name = $("#germline_sample_name").val().trim()
+        const cfdna_sid = $("#cfdna_sid1").val().trim();
+        const sid = cfdna_sid + ',' + $("#cfdna_sid2").val().trim()
+        const germline_sid = $("#germline_sid").val().trim()
 
-        const normal_val = germline_sample_name;
+        const normal_val = germline_sid;
         sample_list.push(normal_val);
 
-        const cfdna_val = cfdna_sample_name;
-        sample_list.push(cfdna_val);
+        $.each(sid.split(','), function(key, val){
+            if(val){
+                sample_list.push(val);
+            }
+        })
 
-        let validate_boolean = false
+        let validate_boolean = false;
+        const counter = wrapper[0].childNodes.length - 1;
+        
+        if(counter > 0){
+            $(".input_fields_wrap .add-new-row").each(function(idx, el){
+                const i = $("#"+this.id).attr('d-id');
 
-        const counter = wrapper[0].childNodes.length;
-
-        if(counter > 1){
-            for(i=1; i<counter; i++){
-                const cfdna_sample_name_1 = $("#cfdna_sample_name_"+i).val()
-                const germline_sample_name_1 = $("#germline_sample_name_"+i).val()
+                const sid_1 = $("#cfdna_sid1_"+i).val();
+                const germline_sid_1 = $("#germline_sid_"+i).val();
                 
-                if(cfdna_sample_name_1 != '' && germline_sample_name_1 != ''){
+                if(sid_1 != '' && germline_sid_1 != '' ){
+                    const sid_str = $("#cfdna_sid1_"+i).val() + ',' + $("#cfdna_sid2_"+i).val();
                     validate_boolean = true;
-                    const normal_val = germline_sample_name_1;
-                    sample_list.push(normal_val);
-                    const cfdna_val = cfdna_sample_name_1;
-                    sample_list.push(cfdna_val);
-                }else{
-                    break
+                    sample_list.push(germline_sid_1);
+
+                    $.each(sid_str.split(','), function(key, val){
+                        if(val){
+                            sample_list.push(val);
+                        }
+                    })
+                } else {
+                    validate_boolean = false;
+                    return false;
                 }
-           }
+            })
         }else{
-            validate_boolean = true
+            validate_boolean = true;
         }
         
-        if(project_name != '' && cfdna_sample_name != ''  && germline_sample_name != '' && validate_boolean && sample_list){
+        if(project_name != '' && cfdna_sid != '' && germline_sid != '' && validate_boolean && sample_list){
             sample_generate_barcode(base_url, project_name, sample_list.join())
         }else{
             toastr["error"]("Please provide mandatory fields.")
