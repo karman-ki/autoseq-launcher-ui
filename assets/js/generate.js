@@ -52,6 +52,14 @@ $(document).ready(function(){
         loadConfigFile();
     }
 
+    $('#togglePassword').on('click', function (e) {
+        const input = $("#password");
+        const type = input.attr('type') === 'password' ? 'text' : 'password';
+        input.attr('type', type);
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        
+    });
+
     $("#sample_processing_step").on("change", function() {
         const sample_option = $(this).val();
         $(".sample, .upload").hide()
@@ -68,29 +76,19 @@ $(document).ready(function(){
     const regex_dict = {'PROBIO': /^(PB-P-)(.*)/, 'PSFF' : /^(PSFF-P-)(.*)/};
 
 
-    // $(document).on("click", ".sdidChecked", function(e){
-    //     const chck_stat = $(this).is(':checked')
-    //     const id_val = $(this).attr('id').split('_')[1]
-    //     const ids = (id_val == undefined ? '' : '_'+id_val)
-    //     if(chck_stat){
-    //         $("#germline_sdid"+ids).prop("disabled", true);
-    //         $("#germline_sdid"+ids).val('');
-    //     }else{
-    //         $("#germline_sdid"+ids).prop("disabled", false);
-    //     }
-    // })
-
     $(".custom-file-input").on("change", function() {
         const fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     })
 
     $(".form-submit").on('click', function(){
+        const anch_user = $("#username").val().trim()
+        const anch_pwd = $("#password").val().trim()
         const project_name = $("#project_name option:selected").val()
         const orderform_file = $(".custom-file-input").val()
-        if(project_name != '' && orderform_file != ''){
+        if(project_name != "" && orderform_file != ""){
             const fileUpload = $("#orderFormfile")[0];
-            getSampleInfo(fileUpload, project_name)
+            getSampleInfo(fileUpload, project_name, anch_user, anch_pwd)
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -101,70 +99,8 @@ $(document).ready(function(){
         var total_fields = wrapper[0].childNodes.length;
         if(total_fields < max_fields){
 
-            // const divContent = '<div class="row">'+
-            // '    <div class="col-6">'+
-            // '        <p class="text-center font-weight-bold">CFDNA / Tissue</p>'+
-            // '        <div class="row">'+
-            // '        <div class="col">'+
-            // '            <div class="form-group">'+
-            // '                <label class="mandatory">SDID <small>(Patient ID)</small></label>'+
-            // '                <div class="mb-3">'+
-            // '                    <input type="text" class="form-control" id="sdid_'+total_fields+'" placeholder="P-0031289">'+
-            // '                </div>'+
-            // '            </div>'+
-            // '        </div>'+
-            // '        <div class="col">'+
-            // '            <div class="form-group">'+
-            // '                <label class="mandatory">SID1 <small>(barcode from tube 1)</small></label>'+
-            // '                <div class="mb-3">'+
-            // '                    <input type="text" class="form-control" id="sid1_'+total_fields+'" placeholder="0809123">'+
-            // '                </div>'+
-            // '            </div>'+
-            // '        </div>'+
-            // '        <div class="col">'+
-            // '            <div class="form-group">'+
-            // '                <label>SID2 <small>(barcode from tube 2)</small></label>'+
-            // '                <div class="mb-3">'+
-            // '                    <input type="text" class="form-control" id="sid2_'+total_fields+'" placeholder="0809123">'+
-            // '                </div>'+
-            // '            </div>'+
-            // '        </div>'+
-            // '        </div>'+
-            // '    </div>'+
-            // '    <div class="col-4 vertical-line">'+
-            // '        <p class="text-center font-weight-bold">Germline</p>'+
-            // '        <div class="row">'+
-            // '            <div class="col">'+
-            // '                <div class="form-group">'+
-            // '                    <label class="mandatory">SDID <small>(Patient ID)</small></label>'+
-            // '                    <div class="mb-3">'+
-            // '                    <input type="text" class="form-control" id="germline_sdid_'+total_fields+'" placeholder="0809124">'+
-            // '                    </div>'+
-            // '                </div>'+
-            // '            </div>'+
-            // '            <div class="col">'+
-            // '                <div class="form-group">'+
-            // '                    <label class="mandatory">SID <small>(barcode from tube)</small></label>'+
-            // '                    <div class="mb-3">'+
-            // '                    <input type="text" class="form-control" id="germline_sid_'+total_fields+'" placeholder="0809124">'+
-            // '                    </div>'+
-            // '                </div>'+
-            // '            </div>'+
-            // '        </div>'+
-            // '    </div>'+
-            // '    <div class="col-2">'+
-            // '        <div class="form-group float-right">'+
-            // '        <button type="button" class="btn btn-sm btn-danger remove-btn"><i class="fas fa-minus"></i></button>'+
-            // '        </div>'+
-            // '        <div class="form-check form-check-inline check-box-block">'+
-            // '        <input class="form-check-input sdidChecked" type="checkbox" id="sdidChecked_'+total_fields+'">'+
-            // '        <label class="form-check-label" for="sdidChecked_'+total_fields+'">Both SDID Same</label>'+
-            // '        </div>'+
-            // '    </div>'+
-            // '</div>';
-
             const divContent = '<div class="row add-new-row" id="add_'+total_fields+'" d-id='+total_fields+'>'+
-            '    <div class="col-6">'+
+            '    <div class="col-7">'+
             '        <div class="row">'+
             '           <div class="col">'+
             '               <div class="form-group">'+
@@ -196,7 +132,7 @@ $(document).ready(function(){
             '            </div>'+
             '        </div>'+
             '    </div>'+
-            '    <div class="col-2">'+
+            '    <div class="col-1">'+
             '        <div class="form-group float-right">'+
             '        <button type="button" class="btn btn-sm btn-danger remove-btn" data-id='+total_fields+'><i class="fas fa-minus"></i></button>'+
             '        </div>'+
@@ -214,66 +150,10 @@ $(document).ready(function(){
 
     })
 
-    // $(document).on("click", ".search-sample-submit", function(){
-    //     let sample_list = []
-    //     const project_name = $("#project_name option:selected").val().trim()
-    //     const sdid = $("#sdid").val().trim()
-    //     const sid = $("#sid1").val().trim() + ',' + $("#sid2").val().trim()
-    //     const germline_sid = $("#germline_sid").val().trim()
-    //     const germline_sdid = ($("#sdidChecked").is(':checked') == true ? sdid : $("#germline_sdid").val().trim())
-
-    //     const normal_val = project_name+'-'+germline_sdid+'-N-'+germline_sid+'-*'
-    //     sample_list.push(normal_val)
-
-    //     let cfdna_val = ''
-
-    //     $.each(sid.split(','), function(key, val){
-    //         if(val){
-    //             cfdna_val = project_name+'-'+sdid+'-CFDNA-'+val+'-*'
-    //             sample_list.push(cfdna_val)
-    //         }
-    //     })
-
-    //     let validate_boolean = false
-
-    //     const counter = wrapper[0].childNodes.length;
-
-    //     if(counter > 1){
-    //         for(i=1; i<counter; i++){
-    //             const sdid_1 = $("#sdid_"+i).val()
-    //             const sid_1 = $("#sid1_"+i).val() + ',' + $("#sid2_"+i).val()
-    //             const germline_sid_1 = $("#germline_sid_"+i).val()
-    //             const germline_sdid_1 = ($("#sdidChecked_"+i).is(':checked') == true ? sdid_1 : $("#germline_sdid_"+i).val())
-                
-    //             if(sdid_1 != '' && sid_1 != '' && germline_sid_1 != '' && germline_sdid_1 != ''){
-    //                 validate_boolean = true
-    //                 const normal_val = project_name+'-'+germline_sdid_1+'-N-'+germline_sid_1+'-*'
-    //                 sample_list.push(normal_val)
-
-    //                 $.each(sid_1.split(','), function(key, val){
-    //                     if(val){
-    //                         cfdna_val = project_name+'-'+sdid_1+'-CFDNA-'+val+'-*'
-    //                         sample_list.push(cfdna_val)
-    //                     }
-    //                 })
-    //             }else{
-    //                 break
-    //             }
-    //        }
-    //     }else{
-    //         validate_boolean = true
-    //     }
-        
-    //     if(project_name != '' && sdid != '' && sid != '' && germline_sid != '' && germline_sdid != '' && validate_boolean && sample_list){
-    //         sample_generate_barcode(base_url, project_name, sample_list.join())
-    //     }else{
-    //         toastr["error"]("Please provide mandatory fields.")
-    //     }
-    // })
-
-
     $(document).on("click", ".search-sample-submit", function(){
         let sample_list = []
+        const anch_user = $("#username").val().trim()
+        const anch_pwd = $("#password").val().trim()
         const project_name = $("#project_name option:selected").val().trim()
         const cfdna_sid = $("#cfdna_sid1").val().trim();
         const sid = cfdna_sid + ',' + $("#cfdna_sid2").val().trim()
@@ -298,7 +178,7 @@ $(document).ready(function(){
                 const sid_1 = $("#cfdna_sid1_"+i).val();
                 const germline_sid_1 = $("#germline_sid_"+i).val();
                 
-                if(sid_1 != '' && germline_sid_1 != '' ){
+                if(sid_1 != "" && germline_sid_1 != "" ){
                     const sid_str = $("#cfdna_sid1_"+i).val() + ',' + $("#cfdna_sid2_"+i).val();
                     validate_boolean = true;
                     sample_list.push(germline_sid_1);
@@ -317,16 +197,16 @@ $(document).ready(function(){
             validate_boolean = true;
         }
         
-        if(project_name != '' && cfdna_sid != '' && germline_sid != '' && validate_boolean && sample_list){
-            sample_generate_barcode(base_url, project_name, sample_list.join())
+        if(anch_user != "" && anch_pwd != "" && project_name != "" && cfdna_sid != "" && germline_sid != "" && validate_boolean && sample_list){
+            sample_generate_barcode(base_url, anch_user, anch_pwd,project_name, sample_list.join())
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
     })
 
-    function getSampleInfo(fileUpload, project_name){
+    function getSampleInfo(fileUpload, project_name, anch_user, anch_pwd){
         const regex = /^([\W\S.]*)\.xls[xm]?$/;
-        let sample_list = ''
+        let sample_list = ""
         if (regex.test(fileUpload.value.toLowerCase())) {
             if (typeof (FileReader) != "undefined") {
                 const reader = new FileReader();
@@ -346,7 +226,7 @@ $(document).ready(function(){
                         for (const i = 0; i < bytes.byteLength; i++) {
                             data += String.fromCharCode(bytes[i]);
                         }
-                        processExcel(data, project_name, file_name);
+                        processExcel(data, project_name, file_name, anch_user, anch_pwd);
                     };
                     sample_list = reader.readAsArrayBuffer(fileUpload.files[0]);
                 }
@@ -359,7 +239,7 @@ $(document).ready(function(){
 
     }
 
-    function processExcel(data, project_name, file_name) {
+    function processExcel(data, project_name, file_name, anch_user, anch_pwd) {
 
         const regex_patt = regex_dict[project_name]
        //Read the Excel File data.
@@ -378,7 +258,7 @@ $(document).ready(function(){
         //Read all rows from First Sheet into an JSON array.
         const excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-        let sample_arr =  ''
+        let sample_arr =  ""
         //Add the data rows from Excel file.
         for (let i = 0; i < excelRows.length; i++) {
             //Add the data row.
@@ -387,15 +267,14 @@ $(document).ready(function(){
                 sample_arr += excelRows[i]['__EMPTY'] +','
             }
         }
-        // generate_barcode(base_url,project_name, '',sample_arr.replace(/,\s*$/, ""), file_name)
-        uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name)
+        uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name, anch_user, anch_pwd)
     }
 
-    function uploadOrderform(base_url, project_name, sample_arr, file_name){
+    function uploadOrderform(base_url, project_name, sample_arr, file_name, anch_user, anch_pwd){
         $("#barcode-list").html('<div class="loader">Loading...</div>')
         $("#barcode-details").show()
 
-        const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name}
+        const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name, "anch_user": anch_user, "anch_pwd": anch_pwd}
         $.ajax({
             url: base_url+'upload_orderform',
             type: 'POST',
@@ -430,10 +309,10 @@ $(document).ready(function(){
         });
     }
 
-    function sample_generate_barcode(base_url, project_name, sample_list){
+    function sample_generate_barcode(base_url, anch_user, anch_pwd, project_name, sample_list){
         $("#barcode-list").html('<div class="loader">Loading...</div>')
         $("#barcode-details").show()
-        const param = {'project_name': project_name, 'samples': sample_list}
+        const param = {'project_name': project_name, 'samples': sample_list, "anch_user": anch_user, "anch_pwd": anch_pwd}
         $.ajax({
             url: base_url+'sample_generate_barcode',
             type: 'POST',
@@ -468,43 +347,6 @@ $(document).ready(function(){
         });
     }
 
-    // function generate_barcode(base_url, project_name, search_pattern, orderfromList, file_name) {
-    //     $("#barcode-list").html('<div class="loader">Loading...</div>')
-    //     $("#barcode-details").show()
-    //     const param = {'project_name': project_name, 'search_pattern': search_pattern, 'sample_arr': orderfromList, 'file_name': file_name}
-    //     $.ajax({
-    //         url: base_url+'generate_barcode',
-    //         type: 'POST',
-    //         data: param,
-    //         dataType : 'json',
-    //         success: function(response){
-    //             const data = response['data']
-    //             if(data.length > 0){
-    //                 const barcoed_list = data[0]['file_list']
-    //                 const barcoed_id = data[0]['b_id']
-    //                 let barcode_li = '<ol>'
-    //                 $.each(barcoed_list, function(key,val){
-    //                     barcode_li += '<li><span>'+val+'</span></li>'
-    //                 })
-    //                 barcode_li +='</ol>'
-    //                 barcode_li +='<p> '+
-    //                             '<button type="button" class="btn bg-info btn-md btn-flat col-2 float-right generate-config" data-id="'+barcoed_id+'">Generate Config file</button>'+
-    //                             '</p>'
-    //                 $("#barcode-list").html(barcode_li)
-    //                 $("#barcode-details").show()
-    //                 toastr['success']('Barcode generate successfully')
-    //             }else{
-    //                 toastr['error'](response['error'])
-    //                 $("#barcode-details").hide()
-    //             }
-               
-    //         },
-    //         error: function(response, error){
-    //             const err_text = response.responseJSON
-    //             toastr['error'](err_text);
-    //         }
-    //     });   
-    // }
 
     $(document).on("click", ".generate-config", function(){
         const bar_id = $(this).attr('data-id');
