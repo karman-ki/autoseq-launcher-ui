@@ -15,12 +15,19 @@
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
+		
 		<div class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
-					<div class="col-sm-12">
+					<div class="col-sm-6">
 						<h5 class="m-0 text-uppercase"> Job flow and status information</h5>
 					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<button type="button" class="btn btn-md btn btn-outline-info float-right analysis-refresh"><i class="fas fa-sync-alt"></i> Refresh</button>
+					</div><!-- /.col -->
+				</div>
+				<div class="row">
+					<!-- /.col -->
 					<div class="col-sm-12 mt-4">
 						<div class="row">
 						<div class="col-sm-2">

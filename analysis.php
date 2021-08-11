@@ -25,7 +25,7 @@
           <button type="button" class="btn btn-md btn btn-outline-info float-right analysis-refresh"><i class="fas fa-sync-alt"></i> Refresh</button>
           </div><!-- /.col -->
         </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+      </div>
     </div>
     <!-- /.content-header -->
 

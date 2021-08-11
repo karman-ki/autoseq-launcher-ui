@@ -71,21 +71,25 @@ $(document).ready(function(){
                 let project_list_table = '';
         
                 $.each(jsonData,function(key, value){
-                    const project_status = value['pro_status']
-                    let button_info = ''
-                    let edit_btn_enable = ''
+                    const project_status = value['pro_status'];
+                    let button_info = '';
+                    let edit_btn_enable = '';
+                    let progress_color = 'bg-default';
                     if(project_status == '0'){
                         button_info = '<li><button type="button" class="btn bg-info btn-sm start-pipeline " data-id="'+value['p_id']+'">Start</button></li>';
+                        progress_color = 'bg-info';
                     }else if(project_status == '1'){
-                        edit_btn_enable = 'disabled'
-                        button_info = '<li><button type="button" class="btn bg-primary btn-sm ">Running</button></li><li><button type="button" class="btn bg-danger btn-sm stop-pipeline " data-id="'+value['p_id']+'">Stop</button></li>';
+                        edit_btn_enable = 'disabled';
+                        progress_color = 'bg-primary';
+                        button_info = '<li><button type="button" class="btn bg-primary btn-sm cursor-disable">Running</button></li><li><button type="button" class="btn bg-danger btn-sm stop-pipeline " data-id="'+value['p_id']+'">Stop</button></li>';
                     }else if(project_status == '2'){
-                        button_info = '<li><span class="btn btn-danger btn-sm">Failed</span></li><li><button type="button" class="btn bg-secondary btn-sm start-pipeline " data-id="'+value['p_id']+'">Re-Start</button></li>';
+                        progress_color = 'bg-danger';
+                        button_info = '<li><button class="btn btn-sm bg-danger cursor-disable">Failed</button></li><li><button type="button" class="btn bg-secondary btn-sm start-pipeline " data-id="'+value['p_id']+'">Re-Start</button></li>';
                     }else if(project_status == '-1'){
-                        button_info = '<li><span class="btn btn-success btn-sm">Completed</span></li>';
+                        progress_color = 'bg-success';
+                        button_info = '<li><button class="btn btn-success btn-sm cursor-disable">Completed</button></li>';
                     }
-                    const percentage = (value['progress_bar'] == 'None' ? '1' : value['progress_bar'] )
-
+                    const percentage = parseInt(value['progress_bar'] == 'None' || value['progress_bar'] == 0 ? 1 : value['progress_bar'] );
                     project_list_table += '<tr>'+
                                 '  <td>'+value['project_name']+'</td>'+
                                 '  <td>'+value['sample_id']+'</td>'+
@@ -94,8 +98,8 @@ $(document).ready(function(){
                                 '  <td>'+value['cores']+' / '+value['machine_type']+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
                                 '  <td>'+
-                                '       <div class="progress">'+
-                                '           <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:'+percentage+'%;" aria-valuenow="'+percentage+'" aria-valuemin="0" aria-valuemax="100">'+percentage+'%</div>'+
+                                '       <div class="progress">'+                                
+                                '           <div class="progress-bar progress-bar-striped '+progress_color+'" role="progressbar" style="width: '+percentage+'%;" aria-valuenow="'+percentage+'" aria-valuemin="0" aria-valuemax="100">'+percentage+'%</div>'+
                                 '       </div>'+
                                 '  </td>'+
                                 '  <td>'+
@@ -120,12 +124,12 @@ $(document).ready(function(){
                     "columnDefs": [
                         { "width": "5%", "targets": 0 },
                         { "width": "5%", "targets": 1 },
-                        { "width": "50%", "targets": 2 },
-                        { "width": "5%", "targets": 3 },
+                        { "width": "45%", "targets": 2 },
+                        { "width": "10%", "targets": 3 },
                         { "width": "5%", "targets": 4 },
-                        { "width": "10%", "targets": 5 },
-                        { "width": "10%", "targets": 6 },
-                        { "width": "10%", "targets": 7 },
+                        { "width": "5%", "targets": 5 },
+                        { "width": "5%", "targets": 6 },
+                        { "width": "20%", "targets": 7 },
                     ],
                     "language": {
                         "emptyTable": "No Project information available",

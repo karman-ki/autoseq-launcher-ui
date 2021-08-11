@@ -82,13 +82,13 @@ $(document).ready(function(){
     })
 
     $(".form-submit").on('click', function(){
-        const anch_user = $("#username").val().trim()
-        const anch_pwd = $("#password").val().trim()
-        const project_name = $("#project_name option:selected").val()
-        const orderform_file = $(".custom-file-input").val()
+        const anch_user = $("#username").val().trim();
+        const anch_pwd = $("#password").val().trim();
+        const project_name = $("#project_name option:selected").val();
+        const orderform_file = $(".custom-file-input").val();
         if(project_name != "" && orderform_file != ""){
             const fileUpload = $("#orderFormfile")[0];
-            getSampleInfo(fileUpload, project_name, anch_user, anch_pwd)
+            getSampleInfo(fileUpload, project_name, anch_user, anch_pwd);
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -152,12 +152,12 @@ $(document).ready(function(){
 
     $(document).on("click", ".search-sample-submit", function(){
         let sample_list = []
-        const anch_user = $("#username").val().trim()
-        const anch_pwd = $("#password").val().trim()
-        const project_name = $("#project_name option:selected").val().trim()
+        const anch_user = $("#username").val().trim();
+        const anch_pwd = $("#password").val().trim();
+        const project_name = $("#project_name option:selected").val().trim();
         const cfdna_sid = $("#cfdna_sid1").val().trim();
-        const sid = cfdna_sid + ',' + $("#cfdna_sid2").val().trim()
-        const germline_sid = $("#germline_sid").val().trim()
+        const sid = cfdna_sid + ',' + $("#cfdna_sid2").val().trim();
+        const germline_sid = $("#germline_sid").val().trim();
 
         const normal_val = germline_sid;
         sample_list.push(normal_val);
@@ -198,7 +198,7 @@ $(document).ready(function(){
         }
         
         if(anch_user != "" && anch_pwd != "" && project_name != "" && cfdna_sid != "" && germline_sid != "" && validate_boolean && sample_list){
-            sample_generate_barcode(base_url, anch_user, anch_pwd,project_name, sample_list.join())
+            sample_generate_barcode(base_url, anch_user, anch_pwd,project_name, sample_list.join());
         }else{
             toastr["error"]("Please provide mandatory fields.")
         }
@@ -241,7 +241,7 @@ $(document).ready(function(){
 
     function processExcel(data, project_name, file_name, anch_user, anch_pwd) {
 
-        const regex_patt = regex_dict[project_name]
+        const regex_patt = regex_dict[project_name];
        //Read the Excel File data.
        const workbook = XLSX.read(data, {
             type: 'binary'
@@ -249,56 +249,56 @@ $(document).ready(function(){
 
         //Fetch the name of First Sheet.
         const validSheetName = 'orderform';
-        let sheetName = 'orderform'
+        let sheetName = 'orderform';
         $.each(workbook.SheetNames, function(key, value){
-        if(validSheetName == value.toLowerCase()){
-            sheetName = value
-        }
+            if(validSheetName == value.toLowerCase()){
+                sheetName = value;
+            }
         })
         //Read all rows from First Sheet into an JSON array.
         const excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-        let sample_arr =  ""
+        let sample_arr =  "";
         //Add the data rows from Excel file.
         for (let i = 0; i < excelRows.length; i++) {
             //Add the data row.
             const sample_name = excelRows[i]['__EMPTY'];
             if (regex_patt.test(sample_name)) {
-                sample_arr += excelRows[i]['__EMPTY'] +','
+                sample_arr += excelRows[i]['__EMPTY'] +',';
             }
         }
-        uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name, anch_user, anch_pwd)
+        uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name, anch_user, anch_pwd);
     }
 
     function uploadOrderform(base_url, project_name, sample_arr, file_name, anch_user, anch_pwd){
-        $("#barcode-list").html('<div class="loader">Loading...</div>')
-        $("#barcode-details").show()
+        $("#barcode-list").html('<div class="loader">Loading...</div>');
+        $("#barcode-details").show();
 
-        const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name, "anch_user": anch_user, "anch_pwd": anch_pwd}
+        const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name, "anch_user": anch_user, "anch_pwd": anch_pwd};
         $.ajax({
             url: base_url+'upload_orderform',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
-                const data = response['data']
+                const data = response['data'];
                 if(data.length > 0){
-                    const barcoed_list = data[0]['file_list']
-                    const barcoed_id = data[0]['b_id']
-                    let barcode_li = '<ol>'
+                    const barcoed_list = data[0]['file_list'];
+                    const barcoed_id = data[0]['b_id'];
+                    let barcode_li = '<ol>';
                     $.each(barcoed_list, function(key,val){
-                        barcode_li += '<li><span>'+val+'</span></li>'
+                        barcode_li += '<li><span>'+val+'</span></li>';
                     })
-                    barcode_li +='</ol>'
+                    barcode_li +='</ol>';
                     barcode_li +='<p> '+
                                 '<button type="button" class="btn bg-success btn-md btn-flat col-1 float-right generate-config" data-id="'+barcoed_id+'">Create Analysis List</button>'+
-                                '</p>'
-                    $("#barcode-list").html(barcode_li)
-                    $("#barcode-details").show()
-                    toastr['success']('Barcode generate successfully')
+                                '</p>';
+                    $("#barcode-list").html(barcode_li);
+                    $("#barcode-details").show();
+                    toastr['success']('Barcode generate successfully');
                 }else{
-                    toastr['error'](response['error'])
-                    $("#barcode-details").hide()
+                    toastr['error'](response['error']);
+                    $("#barcode-details").hide();
                 }
                
             },
@@ -310,33 +310,33 @@ $(document).ready(function(){
     }
 
     function sample_generate_barcode(base_url, anch_user, anch_pwd, project_name, sample_list){
-        $("#barcode-list").html('<div class="loader">Loading...</div>')
-        $("#barcode-details").show()
-        const param = {'project_name': project_name, 'samples': sample_list, "anch_user": anch_user, "anch_pwd": anch_pwd}
+        $("#barcode-list").html('<div class="loader">Loading...</div>');
+        $("#barcode-details").show();
+        const param = {'project_name': project_name, 'samples': sample_list, "anch_user": anch_user, "anch_pwd": anch_pwd};
         $.ajax({
             url: base_url+'sample_generate_barcode',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
-                const data = response['data']
+                const data = response['data'];
                 if(data.length > 0){
-                    const barcoed_list = data[0]['file_list']
-                    const barcoed_id = data[0]['b_id']
-                    let barcode_li = '<ol>'
+                    const barcoed_list = data[0]['file_list'];
+                    const barcoed_id = data[0]['b_id'];
+                    let barcode_li = '<ol>';
                     $.each(barcoed_list, function(key,val){
-                        barcode_li += '<li><span>'+val+'</span></li>'
+                        barcode_li += '<li><span>'+val+'</span></li>';
                     })
-                    barcode_li +='</ol>'
+                    barcode_li +='</ol>';
                     barcode_li +='<p> '+
                                 '<button type="button" class="btn bg-success btn-md col-1 float-right generate-config" data-id="'+barcoed_id+'">Create Analysis List</button>'+
-                                '</p>'
-                    $("#barcode-list").html(barcode_li)
-                    $("#barcode-details").show()
-                    toastr['success']('Barcode generate successfully')
+                                '</p>';
+                    $("#barcode-list").html(barcode_li);
+                    $("#barcode-details").show();
+                    toastr['success']('Barcode generate successfully');
                 }else{
-                    toastr['error'](response['error'])
-                    $("#barcode-details").hide()
+                    toastr['error'](response['error']);
+                    $("#barcode-details").hide();
                 }
                
             },
@@ -350,19 +350,19 @@ $(document).ready(function(){
 
     $(document).on("click", ".generate-config", function(){
         const bar_id = $(this).attr('data-id');
-        generate_config(bar_id, base_url)
+        generate_config(bar_id, base_url);
     })
 
     function generate_config(bar_id, base_url){
 
-        const param = {'barcode_id': bar_id}
+        const param = {'barcode_id': bar_id};
         $.ajax({
             url: base_url+'generate_config',
             type: 'POST',
             data: param,
             dataType : 'json',
             success: function(response){
-                const data = response['data']
+                const data = response['data'];
                 if(data.length > 0){
                     toastr['success']('Generate Config file');
                     window.location.href='../../analysis.php';

@@ -60,6 +60,12 @@ $(document).ready(function(){
 		$(this).html( '<input type="text" class="input-sm" placeholder="'+title+'" />' );
 	 });
 
+	
+	$(document).on("click", ".analysis-refresh", function(){
+        $('#tb_job_status_list').DataTable().destroy();
+        getJobStatusInfo(job_id)
+    })
+
 	$("#project_id").html(project_id)
 	$("#status").html('-')
 	$("#startTime").html('-')

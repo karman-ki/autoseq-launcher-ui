@@ -231,13 +231,19 @@ a.btn.disabled {
 }
 
 .analysis-status-ul{
+  padding: 0;
+  margin: 0;
   list-style: none;
-  padding:0px;
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-/* .analysis-status-ul li {
-  display: inline;
-  margin:5px;
-} */
+.analysis-status-ul li {
+  padding: 5px;
+}
+
+.cursor-disable{
+  cursor: auto;
+  pointer-events: none;
+}
