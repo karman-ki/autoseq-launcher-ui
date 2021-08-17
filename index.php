@@ -21,6 +21,7 @@
 						<h5 class="m-0 text-uppercase"> Create Sample List</h5>
 					</div>
 					<div class="col-sm-6">
+						<button type="button" class="btn btn-md btn btn-info float-right rSync-btn"><i class="fas fa-cloud-upload-alt"></i>&nbsp;&nbsp;Sync Data</button>
 					</div>
 				</div>
 			</div>
@@ -170,6 +171,55 @@
 		</div>
 	</div>
 	<!-- /.content-wrapper -->
+
+	<div class="modal" tabindex="-1" role="dialog" id="rSyncSection">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Sync the files for the patients : Anchorage</h5>
+				</div>
+				<div class="modal-body">
+					<form action="" id="rSyncForm">
+						<div class="form-group row">
+							<label for="mdlProjectName" class="col-sm-4 col-form-label mandatory">Project List</label>
+							<div class="col-sm-8">
+								<select class="form-control" id="mdlProjectName">
+									<option value="">-- Select --</option>
+									<option value="PROBIO">PROBIO</option>
+									<option value='PSFF'>PSFF</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="mdlCutomId" class="col-sm-4 col-form-label mandatory">Custom ID</label>
+							<div class="col-sm-8">
+								<input type="number" min="1" class="form-control" id="mdlCutomId" value="eg.. 829511">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="mdlUsername" class="col-sm-4 col-form-label mandatory">Username</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="mdlUsername" placeholder="Enter anchorage username">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="mdlPassword" class="col-sm-4 col-form-label mandatory">Password</label>
+							<div class="col-sm-8 input-group">
+								<input type="password" class="form-control" id="mdlPassword" placeholder="Enter anchorage password">
+								<div class="input-group-append">
+									<span class="input-group-text"><i class="fa fa-eye-slash" id="modelTooglePwd"></i></span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info upload-data-btn">Upload</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Main Footer -->
 	<?php $path = getcwd()."/layout/"; include($path."footer.php"); ?>

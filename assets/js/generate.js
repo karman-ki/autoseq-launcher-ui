@@ -52,8 +52,15 @@ $(document).ready(function(){
         loadConfigFile();
     }
 
-    $('#togglePassword').on('click', function (e) {
+    $(document).on('click', '#togglePassword', function (e) {
         const input = $("#password");
+        const type = input.attr('type') === 'password' ? 'text' : 'password';
+        input.attr('type', type);
+        $(this).toggleClass("fa-eye fa-eye-slash");
+    });
+
+    $(document).on('click', '#modelTooglePwd', function (e) {
+        const input = $("#mdlPassword");
         const type = input.attr('type') === 'password' ? 'text' : 'password';
         input.attr('type', type);
         $(this).toggleClass("fa-eye fa-eye-slash");
@@ -86,7 +93,7 @@ $(document).ready(function(){
         const anch_pwd = $("#password").val().trim();
         const project_name = $("#project_name option:selected").val();
         const orderform_file = $(".custom-file-input").val();
-        if(project_name != "" && orderform_file != ""){
+        if(project_name != "" && orderform_file != "" && anch_user != "" && anch_pwd != ""){
             const fileUpload = $("#orderFormfile")[0];
             getSampleInfo(fileUpload, project_name, anch_user, anch_pwd);
         }else{
@@ -143,6 +150,51 @@ $(document).ready(function(){
             $(wrapper).append(divContent);
         }
     })
+
+    $(document).on('click', '.rSync-btn', function(){
+        $("#rSyncForm").trigger('reset');
+
+        $('#rSyncSection').modal({
+            keyboard: false,
+            backdrop : 'static'
+        })
+    })
+
+    $(document).on('click', '.upload-data-btn', function(){
+        const cutm_id = $("#mdlCutomId").val().trim();
+        const project_name = $("#mdlProjectName option:selected").val();
+        const anch_user = $("#mdlUsername").val().trim();
+        const anch_pwd = $("#mdlPassword").val().trim();
+        if(project_name!= "" && cutm_id != "" && anch_user != "" && anch_pwd != ""){
+            const param = {'project_name': project_name, 'cutm_id': cutm_id, "anch_user": anch_user, "anch_pwd": anch_pwd};
+            syncDataServer(param);
+        }else{
+            toastr["error"]("Please provide mandatory fields.")
+        }
+    })
+
+    function syncDataServer(param){
+        $.ajax({
+            url: base_url+'sync_data',
+            type: 'POST',
+            data: param,
+            dataType : 'json',
+            success: function(response){
+               if(response.data != ""){
+                   $("#rSyncSection").modal('toggle');
+                   const succ_text = response.data;
+                   toastr["error"](succ_text)
+               }else{
+                   const err_text = response.error;
+                   toastr["error"](err_text)
+               }
+            },
+            error: function(response, error){
+                const err_text = response.responseJSON;
+                toastr['error'](err_text);
+            }
+        });
+    }
 
     $(document).on("click", ".remove-btn", function(){
         const total_fields = $(this).attr('data-id');
