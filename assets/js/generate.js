@@ -267,7 +267,7 @@ $(document).ready(function(){
                 const file_name = file_path.split('\\').slice(-1)[0];
                 if (reader.readAsBinaryString) {
                     reader.onload = function (e) {
-                        processExcel(e.target.result, project_name, file_name);
+                        processExcel(e.target.result, project_name, file_name, anch_user, anch_pwd);
                     };
                     sample_list = reader.readAsBinaryString(fileUpload.files[0]);
                 } else {
@@ -327,6 +327,7 @@ $(document).ready(function(){
         $("#barcode-details").show();
 
         const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name, "anch_user": anch_user, "anch_pwd": anch_pwd};
+        console.log(param)
         $.ajax({
             url: base_url+'upload_orderform',
             type: 'POST',
@@ -357,6 +358,7 @@ $(document).ready(function(){
             error: function(response, error){
                 const err_text = response.responseJSON;
                 toastr['error'](err_text);
+                $("#barcode-details").hide();
             }
         });
     }
