@@ -86,6 +86,7 @@ $(document).ready(function(){
                         progress_color = 'bg-danger';
                         button_info = '<li><button class="btn btn-sm bg-danger cursor-disable">Failed</button></li><li><button type="button" class="btn bg-secondary btn-sm start-pipeline " data-id="'+value['p_id']+'">Re-Start</button></li>';
                     }else if(project_status == '-1'){
+                        edit_btn_enable = 'disabled';
                         progress_color = 'bg-success';
                         button_info = '<li><button class="btn btn-success btn-sm cursor-disable">Completed</button></li>';
                     }

@@ -161,7 +161,7 @@ $(document).ready(function(){
 				const data = response.data;
 				if(data.length > 0){
 					let log_content = '<ul class="log-list">'
-					data_arr = data.split(/INFO|WARNING|DEBUG|ERROR|CRITICAL/)
+					data_arr = data.split(/INFO|WARNING|DEBUG|ERROR|CRITICAL|\n/)
 					$.each(data_arr, function(key, val){
 						val = val.replace('\n', '');
 						if(val){
