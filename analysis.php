@@ -106,7 +106,7 @@
               <option value=''>Choose...</option>
               <!-- <option value="gryfindor">Gryfindor</option> -->
               <option value="anchorage">Anchorage</option>
-              <option value="vector">Vector</option>
+              <option value="vector" disabled>Vector</option>
             </select>
             </div>
           </div>
