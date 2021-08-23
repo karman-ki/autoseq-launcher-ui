@@ -90,11 +90,16 @@ $(document).ready(function(){
                         progress_color = 'bg-success';
                         button_info = '<li><button class="btn btn-success btn-sm cursor-disable">Completed</button></li>';
                     }
+
+                    sample_cfdna_t = value['cfdna']
+                    if(sample_cfdna_t == "") {
+                        sample_cfdna_t = value['tumor']
+                    }
                     const percentage = parseInt(value['progress_bar'] == 'None' || value['progress_bar'] == 0 ? 1 : value['progress_bar'] );
                     project_list_table += '<tr>'+
                                 '  <td>'+value['project_name']+'</td>'+
                                 '  <td>'+value['sample_id']+'</td>'+
-                                '  <td>'+value['cfdna']+'</td>'+
+                                '  <td>'+sample_cfdna_t+'</td>'+
                                 '  <td>'+value['normal']+'</td>'+
                                 '  <td>'+value['cores']+' / '+value['machine_type']+'</td>'+
                                 '  <td>'+value['create_time']+'</td>'+
