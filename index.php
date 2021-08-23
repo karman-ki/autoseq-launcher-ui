@@ -42,6 +42,7 @@
 												<option value="">-- Select --</option>
 												<option value="PROBIO">PROBIO</option>
 												<option value='PSFF'>PSFF</option>
+												<option value='LPC'>Localized Profile</option>
 											</select>
 										</div>
 									</div>
