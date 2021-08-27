@@ -15,6 +15,9 @@
           <li class="nav-item" id="nav-li-home">
             <a href="index.php" class="nav-link"><i class="fas fa-home fa-fw mr-1" aria-hidden="true"></i>Home</a>
           </li>
+          <!-- <li class="nav-item" id="nav-li-dashboard">
+            <a href="dashboard.php" class="nav-link"><i class="fas fa-chart-pie  fa-fw mr-1"></i></i>Dashboard</a>
+          </li> -->
           <li class="nav-item" id="nav-li-barcodes">
             <a href="barcodes.php" class="nav-link"><i class="fas fa-bars fa-fw mr-1" aria-hidden="true"></i>Barcodes</a>
           </li>

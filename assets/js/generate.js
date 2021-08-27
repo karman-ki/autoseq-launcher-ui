@@ -183,10 +183,10 @@ $(document).ready(function(){
                if(response.data != ""){
                    $("#rSyncSection").modal('toggle');
                    const succ_text = response.data;
-                   toastr["error"](succ_text)
+                   toastr["success"](succ_text);
                }else{
                    const err_text = response.error;
-                   toastr["error"](err_text)
+                   toastr["error"](err_text);
                }
             },
             error: function(response, error){
@@ -309,17 +309,25 @@ $(document).ready(function(){
         })
         //Read all rows from First Sheet into an JSON array.
         const excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
         let sample_arr =  "";
         //Add the data rows from Excel file.
         for (let i = 0; i < excelRows.length; i++) {
             //Add the data row.
             const sample_name = excelRows[i]['__EMPTY'];
+
+            if('sample name' in excelRows[i] ){
+                sample_name = excelRows[i]['sample name'];
+            }
+
             if (regex_patt.test(sample_name)) {
                 sample_arr += excelRows[i]['__EMPTY'] +',';
             }
         }
-        uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name, anch_user, anch_pwd);
+        if(sample_arr != ""){
+            uploadOrderform(base_url,project_name, sample_arr.replace(/,\s*$/, ""), file_name, anch_user, anch_pwd);
+        }else{
+            toastr['error']("Not Data match in the excel sheet for "+project_name+" project");
+        }
     }
 
     function uploadOrderform(base_url, project_name, sample_arr, file_name, anch_user, anch_pwd){
@@ -327,7 +335,6 @@ $(document).ready(function(){
         $("#barcode-details").show();
 
         const param = {'project_name': project_name, 'sample_arr': sample_arr, 'file_name': file_name, "anch_user": anch_user, "anch_pwd": anch_pwd};
-        console.log(param)
         $.ajax({
             url: base_url+'upload_orderform',
             type: 'POST',
