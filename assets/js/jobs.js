@@ -79,7 +79,9 @@ $(document).ready(function(){
 						status_info = '<span class="text-warning font-weight-bold">Warning</span>';
 					}else if(project_status == '2'){
 						status_info = '<span class="text-danger font-weight-bold">Failed</span>';
-					}else if(project_status == '-1'){
+					}else if(project_status == '-2'){
+                                                status_info = '<span class="text-danger font-weight-bold">Cancelled</span>';
+                                        }else if(project_status == '-1'){
 						status_info = '<span class="text-success font-weight-bold">Completed</span>';
 					}
 
